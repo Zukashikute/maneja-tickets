@@ -9,7 +9,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const db = require('./models');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 app.use(session({
 createTableIfMissing: true,
