@@ -22,9 +22,9 @@ mongoose.Schema({
     ticketDescription: {
         type: String
     },
-    ticketId: {
-        type: Number
-    },
+    // ticketId: {
+    //     type: Number
+    // },
     dateAndTime: {
         type: Date
     },
