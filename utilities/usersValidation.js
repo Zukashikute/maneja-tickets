@@ -43,7 +43,7 @@ validate.registrationRules = () => {
  }
 
  validate.checkRegisterData = async (req, res, next) => {
-    const { firstName, lastName, username, email, jobPosition } = req.body
+    const { firstName, lastName, username, email, jobPosition, password } = req.body
     let errors = []
     errors = validationResult(req)
     if(!errors.isEmpty()) {
