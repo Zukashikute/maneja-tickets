@@ -7,7 +7,7 @@ const doc = {
     },
     host: 'maneja-tickets.onrender.com',
     schemes: ['https'],
-    tags: ['Tickets', 'Users', 'Resolution'],
+    tags: ['Tickets', 'Users', 'Google Users', 'Resolution'],
 };
 
 const outputFile = './swagger.json';

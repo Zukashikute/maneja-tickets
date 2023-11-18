@@ -32,7 +32,7 @@ router.get(
 
 //Oauth with Google
 router.get(
-    //  #swagger.tags = ['Users']
+    //  #swagger.tags = ['Google Users']
     //  #swagger.summary = 'Login with a Google Account.'
     //  #swagger.description = 'Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.'
     '/google',
@@ -43,7 +43,7 @@ router.get(
 
 //callback route for Google to redirect to
 router.get(
-    //  #swagger.tags = ['Users']
+    //  #swagger.tags = ['Google Users']
     //  #swagger.summary = 'Callback route for Google.'
     //  #swagger.description = 'After logging in with a Google account, this is the endpoint Google redirects to.'
     '/google/redirect',

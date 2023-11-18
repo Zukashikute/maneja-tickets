@@ -10,6 +10,7 @@
   "tags": [
     "Tickets",
     "Users",
+    "Google Users",
     "Resolution"
   ],
   "schemes": [
@@ -119,7 +120,7 @@
     "/auth/google": {
       "get": {
         "tags": [
-          "Users"
+          "Google Users"
         ],
         "summary": "Login with a Google Account.",
         "description": "Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.",
@@ -133,7 +134,7 @@
     "/auth/google/redirect": {
       "get": {
         "tags": [
-          "Users"
+          "Google Users"
         ],
         "summary": "Callback route for Google.",
         "description": "After logging in with a Google account, this is the endpoint Google redirects to.",
