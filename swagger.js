@@ -1,6 +1,5 @@
 const swaggerAutogen = require('swagger-autogen')();
 
-
 const doc = {
     info: {
         title: 'My API',
@@ -8,9 +7,10 @@ const doc = {
     },
     host: 'maneja-tickets.onrender.com',
     schemes: ['https'],
+    tags: ['Tickets', 'Users', 'Resolution'],
 };
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./routes/index.js'];
 
-swaggerAutogen(outputFile, endpointsFiles, doc)
+swaggerAutogen(outputFile, endpointsFiles, doc);
