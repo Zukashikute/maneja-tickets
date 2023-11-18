@@ -2,8 +2,8 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
     info: {
-        title: 'My API',
-        description: 'Maneja Tickets System API',
+        title: 'Maneja Tickets System API',
+        description: 'An API for creating and managing support tickets.',
     },
     host: 'maneja-tickets.onrender.com',
     schemes: ['https'],

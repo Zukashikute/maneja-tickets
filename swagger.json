@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Maneja Tickets System API",
+    "title": "Maneja Tickets System API",
+    "description": "An API for creating and managing support tickets.",
     "version": "1.0.0"
   },
   "host": "maneja-tickets.onrender.com",
