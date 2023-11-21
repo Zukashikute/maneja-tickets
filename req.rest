@@ -1,4 +1,10 @@
-POST http://localhost:8080/auth/create HTTP/1.1
+@local = http://localhost:8080
+@deployed = https://maneja-tickets.onrender.com
+
+// Set to "local" or "deployed" based on which environemnt you're testing.
+@host = {{deployed}}
+
+POST {{host}}/auth/create HTTP/1.1
 Content-Type: application/json
 
 {
@@ -8,12 +14,10 @@ Content-Type: application/json
     "email": "marcos@antunes.com",
     "password": "testing123",
     "jobPosition": "web backend developer"
-
-
 }
 
 ###
-POST http://localhost:8080/auth/login HTTP/1.1
+POST {{host}}/auth/login HTTP/1.1
 Content-Type: application/json
 
 {  
@@ -22,7 +26,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/tickets/ekoakeoakeoa
+GET {{host}}/tickets/ekoakeoakeoa
 
 ###
-GET http://localhost:8080/auth/logout
+GET {{host}}/auth/logout
