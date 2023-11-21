@@ -7,6 +7,13 @@ const createNewTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Create a new ticket.'
     //  #swagger.description = 'Creates and inserts a new ticket into the database using a list of fields and values.'
+    /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'The ticket object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketInput' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
     try {
         const newTicket = new Ticket({
             username: req.body.username,
@@ -31,7 +38,14 @@ const createNewTicket = async (req, res) => {
 const updateTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Update a ticket.'
-    //  #swagger.description = 'Updates an existing ticket in the database, given a list of any number of fields and a new values for each.'
+    //  #swagger.description = 'Updates an existing ticket in the database, given a list of any number of fields and a new values for each.
+    /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Any number of fields of the ticket object to be updated, along with their new values.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketInput' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]'
     try {
         const ticketId = new ObjectId(req.params.id);
         const ticket = {
@@ -69,6 +83,13 @@ const getTicketByID = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Get a ticket by ID.'
     //  #swagger.description = 'Retrieve a specified ticket from the database.'
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'The ticket object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketId' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
         const ticketId = new ObjectId(req.params.id);
         if (!ticketId) {
@@ -92,6 +113,13 @@ const deleteTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Delete a ticket by ID.'
     //  #swagger.description = 'Deletes a specified ticket from the database.'
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'All fields of a new ticket object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketId' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
     try {
         const ticketId = new ObjectId(req.params.id);
         if (!ticketId) {

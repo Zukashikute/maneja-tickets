@@ -17,7 +17,7 @@
     "https"
   ],
   "securityDefinitions": {
-    "basicAuth": {
+    "BasicAuth": {
       "type": "basic",
       "authorizationUrl": "https://maneja-tickets.onrender.com/auth/login",
       "flow": "implicit",
@@ -27,7 +27,7 @@
         "admin": "Grants access to admin operations"
       }
     },
-    "oAuthGoogle": {
+    "GoogleOAuth": {
       "type": "oauth2",
       "authorizationUrl": "https://maneja-tickets.onrender.com/auth/google",
       "flow": "implicit",
@@ -150,19 +150,7 @@
           "default": {
             "description": ""
           }
-        },
-        "security": [
-          {
-            "basicAuth": [
-              "read",
-              "write"
-            ],
-            "oAuthGoogle": [
-              "read",
-              "write"
-            ]
-          }
-        ]
+        }
       }
     },
     "/auth/google/redirect": {
@@ -190,34 +178,10 @@
           {
             "name": "body",
             "in": "body",
+            "description": "The ticket object to be inserted.",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phoneNumber": {
-                  "example": "any"
-                },
-                "jobPosition": {
-                  "example": "any"
-                },
-                "ticketTitle": {
-                  "example": "any"
-                },
-                "ticketDescription": {
-                  "example": "any"
-                },
-                "dateAndTime": {
-                  "example": "any"
-                },
-                "priorityLevel": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/TicketInput"
             }
           }
         ],
@@ -231,7 +195,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
       }
     },
     "/tickets/update-ticket/{id}": {
@@ -251,34 +225,10 @@
           {
             "name": "body",
             "in": "body",
+            "description": "Any number of fields of the ticket object to be updated, along with their new values.",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phoneNumber": {
-                  "example": "any"
-                },
-                "jobPosition": {
-                  "example": "any"
-                },
-                "ticketTitle": {
-                  "example": "any"
-                },
-                "ticketDescription": {
-                  "example": "any"
-                },
-                "dateAndTime": {
-                  "example": "any"
-                },
-                "priorityLevel": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/TicketInput"
             }
           }
         ],
@@ -298,7 +248,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
       }
     },
     "/tickets/{id}": {
@@ -316,7 +276,11 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
           }
         ],
         "responses": {
@@ -332,7 +296,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "read"
+            ],
+            "GoogleOAuth": [
+              "read"
+            ]
+          }
+        ]
       }
     },
     "/tickets/delete-ticket/{id}": {
@@ -347,7 +321,11 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "All fields of a new ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
           }
         ],
         "responses": {
@@ -363,7 +341,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
       }
     }
   },
