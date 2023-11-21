@@ -1,4 +1,5 @@
 const swaggerAutogen = require('swagger-autogen')();
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const doc = {
     info: {
@@ -15,24 +16,24 @@ const doc = {
             googleId: '106903543166470337016',
         },
         GoogleUserOutput: {
-            _id: ObjectId('6553fd4495e95588a3921cfd'),
+            _id: new ObjectId('6553fd4495e95588a3921cfd'),
             username: 'MarcosAntunes',
             googleId: '106903543166470337016',
         },
         GoogleUserOutputArray: [{ $ref: '#/definitions/GoogleUserOutput' }],
         ResolutionId: '6553fd4495e95588a3921cfd',
         ResolutionInput: {
-            ticketId: ObjectId('65592886744f7d0ebe92c28d'),
+            ticketId: new ObjectId('65592886744f7d0ebe92c28d'),
             ticketStatus: 'Open',
             resolution: '',
-            assignedEmployeeId: ObjectId('6554f4f588e34040ea6a2085'),
+            assignedEmployeeId: new ObjectId('6554f4f588e34040ea6a2085'),
         },
         ResolutionOutput: {
-            _id: ObjectId('6553fd4495e95588a3921cfd'),
-            ticketId: ObjectId('65592886744f7d0ebe92c28d'),
+            _id: new ObjectId('6553fd4495e95588a3921cfd'),
+            ticketId: new ObjectId('65592886744f7d0ebe92c28d'),
             ticketStatus: 'Open',
             resolution: '',
-            assignedEmployeeId: ObjectId('6554f4f588e34040ea6a2085'),
+            assignedEmployeeId: new ObjectId('6554f4f588e34040ea6a2085'),
         },
         ResolutionOutputArray: [{ $ref: '#/definitions/ResolutionOutput' }],
         SessionId: 'j86VFszYE5_NOCBsOBLCkkmjPqDK2bT8',
@@ -61,7 +62,7 @@ const doc = {
             priorityLevel: 'High',
         },
         TicketOuput: {
-            _id: ObjectId('65592886744f7d0ebe92c28d'),
+            _id: new ObjectId('65592886744f7d0ebe92c28d'),
             username: 'MarcosAntunes',
             email: 'marcos@antunes.com',
             phoneNumber: '123-123-3333',
@@ -84,7 +85,7 @@ const doc = {
             jobPosition: 'Web Backend Developer',
         },
         UserOutput: {
-            _id: ObjectId('6554f4f588e34040ea6a2085'),
+            _id: new ObjectId('6554f4f588e34040ea6a2085'),
             firstName: 'Marcos',
             lastName: 'Antunes',
             username: 'MarcosAntunes',
@@ -94,6 +95,28 @@ const doc = {
             jobPosition: 'Web Backend Developer',
         },
         UserOutputArray: [{ $ref: '#/definitions/UserOuput' }],
+    },
+    securityDefinitions: {
+        BasicAuth: {
+            type: 'basic',
+            authorizationUrl: 'https://maneja-tickets.onrender.com/auth/login',
+            flow: 'implicit',
+            scopes: {
+                read: 'Grants general read access',
+                write: 'Grants general write access',
+                admin: 'Grants access to admin operations',
+            },
+        },
+        GoogleOAuth: {
+            type: 'oauth2',
+            authorizationUrl: 'https://maneja-tickets.onrender.com/auth/google',
+            flow: 'implicit',
+            scopes: {
+                read: 'Grants general read access',
+                write: 'Grants general write access',
+                admin: 'Grants access to admin operations',
+            },
+        },
     },
 };
 
