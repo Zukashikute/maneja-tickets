@@ -39,6 +39,12 @@ const updateTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Update a ticket.'
     //  #swagger.description = 'Updates an existing ticket in the database, given a list of any number of fields and a new values for each.
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'The ID of the ticket to be updated.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketId' }
+    } */
     /*  #swagger.parameters['body'] = {
             in: 'body',
             description: 'Any number of fields of the ticket object to be updated, along with their new values.',
@@ -61,6 +67,10 @@ const updateTicket = async (req, res) => {
         if (!ticketId) {
             res.status(400).send({ message: 'Invalid ticket ID Supplied' });
             return;
+            /*  #swagger.responses[400] = {
+                    description: 'Invalid Ticket ID',
+                    schema: { message: 'Invalid ticket ID Supplied' }
+            } */
         }
         const result = await ticket.save().then((data) => {
             console.log(data);
@@ -69,6 +79,9 @@ const updateTicket = async (req, res) => {
 
         if (result.modifiedCount > 0) {
             res.status(204).send();
+            /*  #swagger.responses[204] = {
+                    description: 'Updated'
+            } */
         } else {
             res.status(500).json(
                 result.error || 'Some error occurred while updating the recipe.'
@@ -95,6 +108,10 @@ const getTicketByID = async (req, res) => {
         if (!ticketId) {
             res.status(400).send({ message: 'Invalid ticket ID Supplied' });
             return;
+            /*  #swagger.responses[400] = {
+                    description: 'Invalid Ticket ID',
+                    schema: { message: 'Invalid ticket ID Supplied' }
+            } */
         }
         const result = await Ticket.find({ _id: ticketId }).then((data) => {
             res.status(201).send(data);
@@ -125,6 +142,10 @@ const deleteTicket = async (req, res) => {
         if (!ticketId) {
             res.status(400).send({ message: 'Invalid ticket ID Supplied' });
             return;
+            /*  #swagger.responses[400] = {
+                    description: 'Invalid Ticket ID',
+                    schema: { message: 'Invalid ticket ID Supplied' }
+            } */
         }
         const result = await Ticket.deleteOne({ _id: ticketId }).then(
             (data) => {
@@ -133,6 +154,9 @@ const deleteTicket = async (req, res) => {
         );
         if (result.deletedCount > 0) {
             res.status(200).send();
+            /*  #swagger.responses[200] = {
+                    description: 'Deleted'
+            } */
         } else {
             res.status(500).json(
                 result.error ||

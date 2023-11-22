@@ -220,7 +220,11 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The ID of the ticket to be updated.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
           },
           {
             "name": "body",
@@ -240,10 +244,22 @@
             "description": "Created"
           },
           "204": {
-            "description": "No Content"
+            "description": "Updated"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Invalid Ticket ID",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -291,7 +307,19 @@
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Invalid Ticket ID",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -330,13 +358,25 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Deleted"
           },
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Invalid Ticket ID",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
