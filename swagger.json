@@ -301,7 +301,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/TicketOutput"
+            }
           },
           "201": {
             "description": "Created"
@@ -573,7 +576,7 @@
         }
       }
     },
-    "TicketOuput": {
+    "TicketOutput": {
       "type": "object",
       "properties": {
         "_id": {

@@ -61,7 +61,7 @@ const doc = {
             dateAndTime: '2023-11-18T00:00:00.000+00:00',
             priorityLevel: 'High',
         },
-        TicketOuput: {
+        TicketOutput: {
             _id: new ObjectId('65592886744f7d0ebe92c28d'),
             username: 'MarcosAntunes',
             email: 'marcos@antunes.com',

@@ -120,6 +120,10 @@ const getTicketByID = async (req, res) => {
         result.toArray().then((lists) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(lists[0]);
+            /*  #swagger.responses[200] = {
+                    description: 'Retrieved',
+                    schema: { $ref: '#/definitions/TicketOutput' }
+            } */
         });
     } catch (error) {
         res.status(500).json(error);
