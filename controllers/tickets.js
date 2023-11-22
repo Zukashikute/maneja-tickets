@@ -84,7 +84,7 @@ const updateTicket = async (req, res) => {
             } */
         } else {
             res.status(500).json(
-                result.error || 'Some error occurred while updating the recipe.'
+                result.error || 'Some error occurred while updating the ticket.'
             );
         }
     } catch (error) {
