@@ -5,10 +5,12 @@ module.exports = (mongoose) => {
         mongoose.Schema({
             _id: {type: ObjectId, auto: true},
             username: {
-                type: String
+                type: String,
+                required: true
             },
             googleId: {
-            type: String    
+            type: String,
+            required: true    
             },
         })
     );

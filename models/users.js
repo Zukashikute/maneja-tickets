@@ -5,22 +5,28 @@ module.exports = (mongoose) => {
     mongoose.Schema({
         _id: {type: ObjectId, auto: true},
         firstName: {
-            type: String
+            type: String,
+            required: true
         },
         lastName: {
-            type: String
+            type: String,
+            required: true
         },
         username: {
-            type: String
+            type: String,
+            required: true
         },
         email: {
-            type: String
+            type: String,
+            required: true
         },
         password: {
-            type: String
+            type: String,
+            required: true
         },
         jobPosition: {
-            type: String
+            type: String,
+            required: true
         }, 
     })
     );
