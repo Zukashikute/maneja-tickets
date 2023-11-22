@@ -1,17 +1,20 @@
 module.exports = (mongoose) => {
 const { ObjectId } = mongoose.Schema.Types;
 const Resolution = mongoose.model(
-'resolution',
+'resolutions',
 mongoose.Schema({
    _id: {type: ObjectId, auto: true},
    ticketStatus: {
-    type: String
+    type: String,
+    required: true
    },
    resolution: {
-    type: String
+    type: String,
+    required: true
    },
    employeeAssigned: {
-    type: String
+    type: String,
+    required: true
    }, 
 })    
 );

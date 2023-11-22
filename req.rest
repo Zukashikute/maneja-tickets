@@ -22,7 +22,33 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/tickets/ekoakeoakeoa
+POST http://localhost:8080/tickets/create-ticket HTTP/1.1
+Content-Type: application/json
+
+{
+            "username": "Marcos Antunes",
+            "email": "marcos@antunes.com",
+            "phoneNumber": "123-123-3333",
+            "jobPosition": "Web Backend Developer",
+            "ticketTitle": "New test",
+            "ticketDescription": "Testing 456"
+}
+
+###
+PUT http://localhost:8080/tickets/update-ticket/655e7e68e0a2c13f6042bd65 HTTP/1.1
+Content-Type: application/json
+
+{
+            "ticketTitle": "New test",
+            "ticketDescription": "Updating",
+            "priorityLevel": "Medium" 
+}
+
+###
+GET http://localhost:8080/tickets/655e7e68e0a2c13f6042bd65
+
+###
+GET http://localhost:8080/tickets/
 
 ###
 GET http://localhost:8080/auth/logout

@@ -5,7 +5,6 @@ require("dotenv").config()
 
 validate.registrationRules = () => {
     return [
-
     body("firstName")
     .trim()
     .isLength({ min: 1})
@@ -27,13 +26,10 @@ validate.registrationRules = () => {
     .normalizeEmail()
     .withMessage("A valid email is required."),
 
-    body("account_password")
+    body("password")
     .trim()
-    .isStrongPassword({
-        maxLength: 16,
-        minLength: 8,
-    })
-    .withMessage("The password must be 8 to 16 characters long"),
+    .isLength({ min: 8})
+    .withMessage("The password must be at least 8 characters long."),
 
     body("jobPosition")
     .trim()
@@ -43,7 +39,7 @@ validate.registrationRules = () => {
  }
 
  validate.checkRegisterData = async (req, res, next) => {
-    const { firstName, lastName, username, email, jobPosition } = req.body
+    const { firstName, lastName, username, email, password, jobPosition  } = req.body
     let errors = []
     errors = validationResult(req)
     if(!errors.isEmpty()) {
@@ -52,6 +48,10 @@ validate.registrationRules = () => {
     }
     next()
 }
+
+
+
+
 
 
 validate.authCheck = async (req, res, next) => {

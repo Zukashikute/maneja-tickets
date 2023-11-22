@@ -1,39 +1,29 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Maneja Tickets System API",
+    "title": "Maneja Tickets System API",
+    "description": "An API for creating and managing support tickets.",
     "version": "1.0.0"
   },
-  "host": "maneja-tickets.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
+  "tags": [
+    "Tickets",
+    "Users",
+    "Google Users",
+    "Resolution"
+  ],
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/auth/login": {
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Login with an existing account.",
+        "description": "Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.",
         "parameters": [
           {
             "name": "body",
@@ -66,7 +56,11 @@
     },
     "/auth/create": {
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user account.",
+        "description": "Creates and inserts a new user account into the database.",
         "parameters": [
           {
             "name": "body",
@@ -86,10 +80,10 @@
                 "email": {
                   "example": "any"
                 },
-                "jobPosition": {
+                "password": {
                   "example": "any"
                 },
-                "password": {
+                "jobPosition": {
                   "example": "any"
                 }
               }
@@ -111,7 +105,11 @@
     },
     "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Log out of a currently logged-in account.",
+        "description": "Log out of a currently logged-in account.",
         "responses": {
           "200": {
             "description": "OK"
@@ -121,7 +119,11 @@
     },
     "/auth/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Google Users"
+        ],
+        "summary": "Login with a Google Account.",
+        "description": "Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.",
         "responses": {
           "default": {
             "description": ""
@@ -131,7 +133,11 @@
     },
     "/auth/google/redirect": {
       "get": {
-        "description": "",
+        "tags": [
+          "Google Users"
+        ],
+        "summary": "Callback route for Google.",
+        "description": "After logging in with a Google account, this is the endpoint Google redirects to.",
         "responses": {
           "default": {
             "description": ""
@@ -141,7 +147,11 @@
     },
     "/tickets/create-ticket": {
       "post": {
-        "description": "",
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Create a new ticket.",
+        "description": "Creates and inserts a new ticket into the database using a list of fields and values.",
         "parameters": [
           {
             "name": "body",
@@ -192,7 +202,11 @@
     },
     "/tickets/update-ticket/{id}": {
       "put": {
-        "description": "",
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Update a ticket.",
+        "description": "Updates an existing ticket in the database, given a list of any number of fields and a new values for each.",
         "parameters": [
           {
             "name": "id",
@@ -206,28 +220,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phoneNumber": {
-                  "example": "any"
-                },
-                "jobPosition": {
-                  "example": "any"
-                },
                 "ticketTitle": {
                   "example": "any"
                 },
                 "ticketDescription": {
-                  "example": "any"
-                },
-                "dateAndTime": {
-                  "example": "any"
-                },
-                "priorityLevel": {
                   "example": "any"
                 }
               }
@@ -238,14 +234,8 @@
           "200": {
             "description": "OK"
           },
-          "201": {
-            "description": "Created"
-          },
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -255,10 +245,11 @@
     },
     "/tickets/{id}": {
       "get": {
-        "description": "",
-        "produces": [
-          "application/json"
+        "tags": [
+          "Tickets"
         ],
+        "summary": "Get a ticket by ID.",
+        "description": "Retrieve a specified ticket from the database.",
         "parameters": [
           {
             "name": "id",
@@ -283,9 +274,33 @@
         }
       }
     },
+    "/tickets/": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Get all tickets",
+        "description": "Get all tickets data from the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/tickets/delete-ticket/{id}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Delete a ticket by ID.",
+        "description": "Deletes a specified ticket from the database.",
         "parameters": [
           {
             "name": "id",

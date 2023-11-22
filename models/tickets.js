@@ -5,31 +5,42 @@ const Tickets = mongoose.model(
 mongoose.Schema({
     _id: {type: ObjectId, auto: true},
     username: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
     },
     phoneNumber: {
-        type: String
+        type: String,
+        required: true
     },
     jobPosition: {
-       type: String  
+       type: String,
+       required: true  
     },
     ticketTitle: {
-        type: String
+        type: String,
+        required: true
     },
     ticketDescription: {
-        type: String
+        type: String,
+        required: true
     },
     // ticketId: {
     //     type: Number
     // },
-    dateAndTime: {
-        type: Date
+    dateCreated: {
+        type: Date,
+        default: Date.now,
+        required: true
     },
     priorityLevel: {
-        type: String
+        type: String,
+        enum: ['Low', 'Medium', 'High'],
+        default: 'Low',
+        required: true
     },
 })    
 );
