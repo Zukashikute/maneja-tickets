@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const validate = require('../utilities/usersValidation');
 const usersController = require('../controllers/users');
 
 
@@ -8,10 +9,15 @@ const usersController = require('../controllers/users');
 router.post('/login', usersController.userLogin);
 
 //Create Account
-router.post('/create', usersController.createAccount);
+router.post('/create', validate.registrationRules(), validate.checkRegisterData, usersController.createAccount);
 
 //logout 
-router.get('/logout', usersController.userLogout)
+router.get('/logout', validate.authCheck, usersController.userLogout, function(req, res, next){
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.redirect('/');
+    });
+  },)
 
 
 //Oauth with Google
