@@ -6,10 +6,15 @@ const getAllTickets = async (req, res) => {
     // #swagger.tags = ['Tickets']
     // #swagger.summary = 'Get all tickets'
     // #swagger.description = 'Get all tickets data from the database'.
+    // #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
         Ticket.find({}).then((lists) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(lists);
+            /* #swagger.responses[200] = {
+                description: 'Retrieved',
+                schema: { $ref: '#/definitions/TicketOutputArray' }
+        } */
         });
     } catch (err) {
         res.status(500).json(err);
@@ -41,6 +46,10 @@ const createNewTicket = async (req, res) => {
             console.log(data);
             res.status(201).send(data);
         });
+        /*  #swagger.responses[201] = {
+                description: 'Created',
+                schema: { $ref: '#/definitions/TicketOutput' }
+        } */
     } catch (err) {
         res.status(500).json(err);
     }
@@ -76,7 +85,11 @@ const updateTicket = async (req, res) => {
         if (!result) {
             return res
                 .status(404)
-                .send({ message: 'No ticket found with id ' + _id });
+                .send({ message: 'No ticket found with ID ' + _id });
+            /*  #swagger.responses[400] = {
+                description: 'Ticket ID Not Found',
+                schema: { $ref: '#/definitions/TicketIdNotFound' }
+            } */
         }
         return res.status(200).json(result);
         /*  #swagger.responses[204] = {
@@ -104,17 +117,17 @@ const getTicketByID = async (req, res) => {
             res.status(400).send({ message: 'Invalid ticket ID Supplied' });
             return;
             /*  #swagger.responses[400] = {
-                    description: 'Invalid Ticket ID',
-                    schema: { message: 'Invalid ticket ID Supplied' }
+                description: 'Ticket ID Not Found',
+                schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
         }
         const result = await Ticket.find({ _id: _id }).then((data) => {
-            res.status(201).send(data);
+            res.status(200).send(data);
         });
         /*  #swagger.responses[200] = {
-                    description: 'Retrieved',
-                    schema: { $ref: '#/definitions/TicketOutput' }
-            } */
+                description: 'Retrieved',
+                schema: { $ref: '#/definitions/TicketOutput' }
+        } */
     } catch (error) {
         res.status(500).json(error);
     }
@@ -124,15 +137,29 @@ const deleteTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Delete a ticket by ID.'
     //  #swagger.description = 'Deletes a specified ticket from the database.'
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'All fields of a new ticket object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketId' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
     try {
         const _id = req.params.id;
         if (!_id) {
             res.status(400).send({ message: 'Invalid ticket ID Supplied' });
             return;
+            /*  #swagger.responses[400] = {
+                description: 'Ticket ID Not Found',
+                schema: { $ref: '#/definitions/TicketIdNotFound' }
+            } */
         }
         const result = await Ticket.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
-                res.status(201).send();
+                res.status(200).send();
+                /*  #swagger.responses[200] = {
+                    description: 'Deleted'
+                } */
             } else {
                 res.status(500).json(
                     data.error ||

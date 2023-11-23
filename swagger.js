@@ -74,6 +74,9 @@ const doc = {
             priorityLevel: 'High',
         },
         TicketOutputArray: [{ $ref: '#/definitions/TicketOuput' }],
+        TicketIdNotFound: [
+            { message: 'No ticket found with ID 65592886744f7d0ebe92c28d' },
+        ],
         UserId: '6554f4f588e34040ea6a2085',
         UserInput: {
             firstName: 'Marcos',
