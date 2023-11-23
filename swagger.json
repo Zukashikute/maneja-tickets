@@ -190,7 +190,10 @@
             "description": "OK"
           },
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/TicketOutput"
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -240,26 +243,17 @@
           "200": {
             "description": "OK"
           },
-          "201": {
-            "description": "Created"
-          },
           "204": {
             "description": "Updated"
           },
           "400": {
-            "description": "Invalid Ticket ID",
+            "description": "Ticket ID Not Found",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid ticket ID Supplied"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/TicketIdNotFound"
             }
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -284,9 +278,6 @@
         ],
         "summary": "Get a ticket by ID.",
         "description": "Retrieve a specified ticket from the database.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "id",
@@ -306,22 +297,43 @@
               "$ref": "#/definitions/TicketOutput"
             }
           },
-          "201": {
-            "description": "Created"
-          },
           "400": {
-            "description": "Invalid Ticket ID",
+            "description": "Ticket ID Not Found",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid ticket ID Supplied"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/TicketIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "read"
+            ],
+            "GoogleOAuth": [
+              "read"
+            ]
+          }
+        ]
+      }
+    },
+    "/tickets/": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Get all tickets",
+        "description": "Get all tickets data from the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/TicketOutputArray"
             }
           },
           "500": {
@@ -363,22 +375,10 @@
           "200": {
             "description": "Deleted"
           },
-          "201": {
-            "description": "Created"
-          },
           "400": {
-            "description": "Invalid Ticket ID",
+            "description": "Ticket ID Not Found",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid ticket ID Supplied"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/TicketIdNotFound"
             }
           },
           "500": {
@@ -621,6 +621,18 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/TicketOuput"
+      }
+    },
+    "TicketIdNotFound": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "No ticket found with ID 65592886744f7d0ebe92c28d"
+          }
+        }
       }
     },
     "UserId": {
