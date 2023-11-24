@@ -8,6 +8,12 @@ const createAccount = async (req, res) => {
     //  #swagger.tags = ['Users']
     //  #swagger.summary = 'Create a new user account.'
     //  #swagger.description = 'Creates and inserts a new user account into the database.'
+    /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'The user object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/UserInput' }
+    } */
     let hashedPassword;
     try {
         // Regular password and cost (salt is generated automatically)
@@ -28,6 +34,9 @@ const createAccount = async (req, res) => {
         .then((data) => {
             console.log(data);
             res.status(201).send(data);
+            /*  #swagger.responses[201] = {
+                    description: 'Created'
+            } */
         })
         .catch((err) => {
             res.status(500).send({
@@ -40,11 +49,20 @@ const createAccount = async (req, res) => {
 const userLogin = async (req, res) => {
     //  #swagger.tags = ['Users']
     //  #swagger.summary = 'Login with an existing account.'
+    /*  #swagger.parameters['body'] = { 
+            in: 'body', 
+            description: 'The email and password of the user to log in with.',
+            required: true, 
+            schema: { $ref: '#/definitions/UserLogin' }
+    } */
     //  #swagger.description = 'Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.'
     const { email, password } = req.body;
     if (!email || !password) {
         res.status(400);
         throw new Error('All fields are mandatory!');
+        /*  #swagger.responses[400] = {
+                description: 'Missing Field',
+        } */
     }
     const user = await Users.findOne({ email });
     try {
@@ -67,13 +85,16 @@ const userLogin = async (req, res) => {
     } catch (error) {
         res.status(401);
         throw new Error(error);
+        /*  #swagger.responses[401] = {
+                description: 'Server Error',
+        } */
     }
 };
 
 const userLogout = async (req, res) => {
     //  #swagger.tags = ['Users']
-    //  #swagger.summary = 'Log out of a currently logged-in account.'
-    //  #swagger.description = 'Log out of a currently logged-in account.'
+    //  #swagger.summary = 'Log out of account.'
+    //  #swagger.description = 'Log out of a currently logged-in account. Redirects to base URL.'
     res.clearCookie('jwt');
     console.log('Success! User logged out.');
     return res.redirect('/');

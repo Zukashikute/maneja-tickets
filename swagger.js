@@ -83,8 +83,7 @@ const doc = {
             lastName: 'Antunes',
             username: 'MarcosAntunes',
             email: 'marcos@antunes.com',
-            password:
-                '$2a$10$VP1sVEWqrbU5p.ICZZO7I.qAXkkPpOXrWKxbNeqQiF5IHI58TdanD',
+            password: 'supersecretpassword',
             jobPosition: 'Web Backend Developer',
         },
         UserOutput: {
@@ -98,6 +97,10 @@ const doc = {
             jobPosition: 'Web Backend Developer',
         },
         UserOutputArray: [{ $ref: '#/definitions/UserOuput' }],
+        UserLogin: {
+            email: 'marcos@antunes.com',
+            password: 'supersecretpassword',
+        },
     },
     securityDefinitions: {
         BasicAuth: {

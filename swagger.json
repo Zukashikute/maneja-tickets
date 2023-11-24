@@ -50,16 +50,10 @@
           {
             "name": "body",
             "in": "body",
+            "description": "The email and password of the user to log in with.",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/UserLogin"
             }
           }
         ],
@@ -68,10 +62,10 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Missing Field"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Server Error"
           }
         }
       }
@@ -87,28 +81,10 @@
           {
             "name": "body",
             "in": "body",
+            "description": "The user object to be inserted.",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "jobPosition": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/UserInput"
             }
           }
         ],
@@ -130,8 +106,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Log out of a currently logged-in account.",
-        "description": "Log out of a currently logged-in account.",
+        "summary": "Log out of account.",
+        "description": "Log out of a currently logged-in account. Redirects to base URL.",
         "responses": {
           "200": {
             "description": "OK"
@@ -654,7 +630,7 @@
         },
         "password": {
           "type": "string",
-          "example": "$2a$10$VP1sVEWqrbU5p.ICZZO7I.qAXkkPpOXrWKxbNeqQiF5IHI58TdanD"
+          "example": "supersecretpassword"
         },
         "jobPosition": {
           "type": "string",
@@ -699,6 +675,19 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/UserOuput"
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "marcos@antunes.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "supersecretpassword"
+        }
       }
     }
   }
