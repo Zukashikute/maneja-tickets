@@ -73,15 +73,17 @@ const doc = {
             dateAndTime: '2023-11-18T00:00:00.000+00:00',
             priorityLevel: 'High',
         },
-        TicketOutputArray: [{ $ref: '#/definitions/TicketOuput' }],
+        TicketOutputArray: [{ $ref: '#/definitions/TicketOutput' }],
+        TicketIdNotFound: {
+            message: 'No ticket found with ID 65592886744f7d0ebe92c28d',
+        },
         UserId: '6554f4f588e34040ea6a2085',
         UserInput: {
             firstName: 'Marcos',
             lastName: 'Antunes',
             username: 'MarcosAntunes',
             email: 'marcos@antunes.com',
-            password:
-                '$2a$10$VP1sVEWqrbU5p.ICZZO7I.qAXkkPpOXrWKxbNeqQiF5IHI58TdanD',
+            password: 'supersecretpassword',
             jobPosition: 'Web Backend Developer',
         },
         UserOutput: {
@@ -95,6 +97,10 @@ const doc = {
             jobPosition: 'Web Backend Developer',
         },
         UserOutputArray: [{ $ref: '#/definitions/UserOuput' }],
+        UserLogin: {
+            email: 'marcos@antunes.com',
+            password: 'supersecretpassword',
+        },
     },
     securityDefinitions: {
         BasicAuth: {
