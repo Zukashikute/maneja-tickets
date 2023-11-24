@@ -369,6 +369,197 @@
           }
         ]
       }
+    },
+    "/resolutions/": {
+      "get": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Get all resolution tickets",
+        "description": "Get all resolution tickets data from the database",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/resolutions/{id}": {
+      "get": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Get a resolution ticket by ID.",
+        "description": "Retrieve a specified resolution ticket from the database.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The resolution ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/ResolutionId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/TicketOutput"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid Resolution Ticket ID",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid resolution ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "read"
+            ],
+            "GoogleOAuth": [
+              "read"
+            ]
+          }
+        ]
+      }
+    },
+    "/resolutions/resolutions": {
+      "post": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Create a new resolution.",
+        "description": "Creates and inserts a new ticket resoluition into the database using a list of fields and values.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resolution": {
+                  "example": "any"
+                },
+                "employeeAssigned": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/resolutions/resolutions/{id}": {
+      "put": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Update a resolution by ID.",
+        "description": "Updates an existing resolution in the database, given a list of any number of fields and a new values for each.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resolution": {
+                  "example": "any"
+                },
+                "employeeAssigned": {
+                  "example": "any"
+                },
+                "ticketStatus": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/resolutions/delete-resolution/{id}": {
+      "delete": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Delete a resolution by ID.",
+        "description": "Deletes a specified resolution from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "definitions": {
