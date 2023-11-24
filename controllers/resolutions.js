@@ -3,6 +3,59 @@ require('dotenv').config();
 const Resolution = db.resolution;
 
 
+const getAllResolutions = () => {
+    // #swagger.tags = ['Resolution']
+    // #swagger.summary = 'Get all resolution tickets'
+    // #swagger.description = 'Get all resolution tickets data from the database'.
+    try {
+        Resolution.find({})
+            .then((lists) => {
+                res.setHeader('Content-Type', 'application/json')
+                res.status(200).json(lists);
+            })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+const getResolutionByID = async (req, res) => {
+    //  #swagger.tags = ['Resolution']
+    //  #swagger.summary = 'Get a resolution ticket by ID.'
+    //  #swagger.description = 'Retrieve a specified resolution ticket from the database.'
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'The resolution ticket object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/ResolutionId' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
+    try {
+        const ticketId = new ObjectId(req.params.id);
+        if (!ticketId) {
+            res.status(400).send({ message: 'Invalid resolution ticket ID Supplied' });
+            return;
+            /*  #swagger.responses[400] = {
+                    description: 'Invalid Resolution Ticket ID',
+                    schema: { message: 'Invalid resolution ticket ID Supplied' }
+            } */
+        }
+        const result = await Resolution.find({ _id: ticketId }).then((data) => {
+            res.status(201).send(data);
+        });
+
+        result.toArray().then((lists) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(lists[0]);
+            /*  #swagger.responses[200] = {
+                    description: 'Retrieved',
+                    schema: { $ref: '#/definitions/TicketOutput' }
+            } */
+        });
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
 const createNewResolution = async (req, res) => {
     //  #swagger.tags = ['Resolution']
     //  #swagger.summary = 'Create a new resolution.'
@@ -34,13 +87,13 @@ const updateResolution = async (req, res) => {
             employeeAssigned: req.body.employeeAssigned,
             resolutionStatus: req.body.ticketStatus,
         };
-        const result = await Resolution.findByIdAndUpdate(_id, resolution, { new: true});
-        if(!result){
-        return res.status(404).send({message: 'No Resolution found with id ' + _id})  
-        }    
-       return res.status(200).json(result);
+        const result = await Resolution.findByIdAndUpdate(_id, resolution, { new: true });
+        if (!result) {
+            return res.status(404).send({ message: 'No Resolution found with id ' + _id })
+        }
+        return res.status(200).json(result);
     } catch (error) {
-      return res.status(500).json(error);
+        return res.status(500).json(error);
     }
 };
 
@@ -56,19 +109,19 @@ const deleteResolution = async (req, res) => {
         }
         const result = await Resolution.deleteOne({ _id: _id }).then(
             (data) => {
-              if (data.deletedCount > 0) {
-                res.status(201).send();
-            } else {
-                res.status(500).json(
-                    data.error ||
+                if (data.deletedCount > 0) {
+                    res.status(201).send();
+                } else {
+                    res.status(500).json(
+                        data.error ||
                         'Some error occurred while deleting the resolution.'
-                );
+                    );
+                }
             }
-            }
-        );    
+        );
     } catch (error) {
         res.status(500).json(error);
     }
 };
 
-module.exports = { createNewResolution,updateResolution,deleteResolution};
+module.exports = { getAllResolutions, getResolutionByID, createNewResolution, updateResolution, deleteResolution };
