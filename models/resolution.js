@@ -4,9 +4,9 @@ const Resolution = mongoose.model(
 'resolutions',
 mongoose.Schema({
    _id: {type: ObjectId, auto: true},
-   ticketStatus: {
+   resolutionStatus: {
     type: String,
-    default: 'Open',
+    default: 'In Progress',
     required: true
    },
    resolution: {

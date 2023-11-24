@@ -9,7 +9,7 @@ const createNewResolution = async (req, res) => {
     //  #swagger.description = 'Creates and inserts a new ticket resoluition into the database using a list of fields and values.'
     try {
         const newResolution = new Resolution({
-            // ticketStatus: req.body.ticketStatus,
+            // resolutionStatus: req.body.ticketStatus,
             resolution: req.body.resolution,
             employeeAssigned: req.body.employeeAssigned,
         });
@@ -32,7 +32,7 @@ const updateResolution = async (req, res) => {
         const resolution = {
             resolution: req.body.resolution,
             employeeAssigned: req.body.employeeAssigned,
-            ticketStatus: req.body.ticketStatus,
+            resolutionStatus: req.body.ticketStatus,
         };
         const result = await Resolution.findByIdAndUpdate(_id, resolution, { new: true});
         if(!result){

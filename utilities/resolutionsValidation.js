@@ -9,7 +9,7 @@ body("resolution")
 .isString()
 .withMessage('Please provide a valid resolution description'),
 
-body('ticketStatus')
+body('resolutionStatus')
 .trim()
 .notEmpty()
 .isString()
