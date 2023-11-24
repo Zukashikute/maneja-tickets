@@ -73,10 +73,10 @@ const doc = {
             dateAndTime: '2023-11-18T00:00:00.000+00:00',
             priorityLevel: 'High',
         },
-        TicketOutputArray: [{ $ref: '#/definitions/TicketOuput' }],
-        TicketIdNotFound: [
-            { message: 'No ticket found with ID 65592886744f7d0ebe92c28d' },
-        ],
+        TicketOutputArray: [{ $ref: '#/definitions/TicketOutput' }],
+        TicketIdNotFound: {
+            message: 'No ticket found with ID 65592886744f7d0ebe92c28d',
+        },
         UserId: '6554f4f588e34040ea6a2085',
         UserInput: {
             firstName: 'Marcos',

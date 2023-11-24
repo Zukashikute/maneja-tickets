@@ -246,14 +246,11 @@
           "204": {
             "description": "Updated"
           },
-          "400": {
+          "404": {
             "description": "Ticket ID Not Found",
             "schema": {
               "$ref": "#/definitions/TicketIdNotFound"
             }
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -297,7 +294,7 @@
               "$ref": "#/definitions/TicketOutput"
             }
           },
-          "400": {
+          "404": {
             "description": "Ticket ID Not Found",
             "schema": {
               "$ref": "#/definitions/TicketIdNotFound"
@@ -375,7 +372,7 @@
           "200": {
             "description": "Deleted"
           },
-          "400": {
+          "404": {
             "description": "Ticket ID Not Found",
             "schema": {
               "$ref": "#/definitions/TicketIdNotFound"
@@ -620,18 +617,15 @@
     "TicketOutputArray": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/TicketOuput"
+        "$ref": "#/definitions/TicketOutput"
       }
     },
     "TicketIdNotFound": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "No ticket found with ID 65592886744f7d0ebe92c28d"
-          }
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No ticket found with ID 65592886744f7d0ebe92c28d"
         }
       }
     },

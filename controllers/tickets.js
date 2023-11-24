@@ -86,7 +86,7 @@ const updateTicket = async (req, res) => {
             return res
                 .status(404)
                 .send({ message: 'No ticket found with ID ' + _id });
-            /*  #swagger.responses[400] = {
+            /*  #swagger.responses[404] = {
                 description: 'Ticket ID Not Found',
                 schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
@@ -114,9 +114,9 @@ const getTicketByID = async (req, res) => {
     try {
         const _id = req.params.id;
         if (!_id) {
-            res.status(400).send({ message: 'Invalid ticket ID Supplied' });
+            res.status(404).send({ message: 'No ticket found with ID ' + _id });
             return;
-            /*  #swagger.responses[400] = {
+            /*  #swagger.responses[404] = {
                 description: 'Ticket ID Not Found',
                 schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
@@ -147,9 +147,9 @@ const deleteTicket = async (req, res) => {
     try {
         const _id = req.params.id;
         if (!_id) {
-            res.status(400).send({ message: 'Invalid ticket ID Supplied' });
+            res.status(404).send({ message: 'No ticket found with ID ' + _id });
             return;
-            /*  #swagger.responses[400] = {
+            /*  #swagger.responses[404] = {
                 description: 'Ticket ID Not Found',
                 schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
