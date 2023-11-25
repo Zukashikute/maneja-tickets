@@ -219,14 +219,8 @@
           "200": {
             "description": "OK"
           },
-          "204": {
-            "description": "Updated"
-          },
           "404": {
-            "description": "Ticket ID Not Found",
-            "schema": {
-              "$ref": "#/definitions/TicketIdNotFound"
-            }
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -251,6 +245,9 @@
         ],
         "summary": "Get a ticket by ID.",
         "description": "Retrieve a specified ticket from the database.",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -265,31 +262,18 @@
         ],
         "responses": {
           "200": {
-            "description": "Retrieved",
-            "schema": {
-              "$ref": "#/definitions/TicketOutput"
-            }
+            "description": "OK"
           },
-          "404": {
-            "description": "Ticket ID Not Found",
-            "schema": {
-              "$ref": "#/definitions/TicketIdNotFound"
-            }
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        },
-        "security": [
-          {
-            "BasicAuth": [
-              "read"
-            ],
-            "GoogleOAuth": [
-              "read"
-            ]
-          }
-        ]
+        }
       }
     },
     "/tickets/": {
@@ -304,25 +288,12 @@
         ],
         "responses": {
           "200": {
-            "description": "Retrieved",
-            "schema": {
-              "$ref": "#/definitions/TicketOutputArray"
-            }
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        },
-        "security": [
-          {
-            "BasicAuth": [
-              "read"
-            ],
-            "GoogleOAuth": [
-              "read"
-            ]
-          }
-        ]
+        }
       }
     },
     "/tickets/delete-ticket/{id}": {
@@ -542,342 +513,38 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "All fields of a new ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Deleted"
           },
           "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Invalid Ticket ID",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "GoogleUsersId": {
-      "type": "string",
-      "example": "6553fd4495e95588a3921cfd"
-    },
-    "GoogleUserInput": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "googleId": {
-          "type": "string",
-          "example": "106903543166470337016"
-        }
-      }
-    },
-    "GoogleUserOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "object",
-          "properties": {}
-        },
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "googleId": {
-          "type": "string",
-          "example": "106903543166470337016"
-        }
-      }
-    },
-    "GoogleUserOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/GoogleUserOutput"
-      }
-    },
-    "ResolutionId": {
-      "type": "string",
-      "example": "6553fd4495e95588a3921cfd"
-    },
-    "ResolutionInput": {
-      "type": "object",
-      "properties": {
-        "ticketId": {
-          "type": "object",
-          "properties": {}
-        },
-        "ticketStatus": {
-          "type": "string",
-          "example": "Open"
-        },
-        "resolution": {
-          "type": "string",
-          "example": ""
-        },
-        "assignedEmployeeId": {
-          "type": "object",
-          "properties": {}
-        }
-      }
-    },
-    "ResolutionOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "object",
-          "properties": {}
-        },
-        "ticketId": {
-          "type": "object",
-          "properties": {}
-        },
-        "ticketStatus": {
-          "type": "string",
-          "example": "Open"
-        },
-        "resolution": {
-          "type": "string",
-          "example": ""
-        },
-        "assignedEmployeeId": {
-          "type": "object",
-          "properties": {}
-        }
-      }
-    },
-    "ResolutionOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ResolutionOutput"
-      }
-    },
-    "SessionId": {
-      "type": "string",
-      "example": "j86VFszYE5_NOCBsOBLCkkmjPqDK2bT8"
-    },
-    "SessionInput": {
-      "type": "object",
-      "properties": {
-        "expires": {
-          "type": "string",
-          "example": "2023-11-29T16:50:32.232+00:00"
-        },
-        "session": {
-          "type": "string",
-          "example": "{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}"
-        }
-      }
-    },
-    "SessionOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string",
-          "example": "j86VFszYE5_NOCBsOBLCkkmjPqDK2bT8"
-        },
-        "expires": {
-          "type": "string",
-          "example": "2023-11-29T16:50:32.232+00:00"
-        },
-        "session": {
-          "type": "string",
-          "example": "{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}"
-        }
-      }
-    },
-    "SessionOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/SessionOutput"
-      }
-    },
-    "TicketId": {
-      "type": "string",
-      "example": "65592886744f7d0ebe92c28d"
-    },
-    "TicketInput": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "email": {
-          "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "phoneNumber": {
-          "type": "string",
-          "example": "123-123-3333"
-        },
-        "jobPosition": {
-          "type": "string",
-          "example": "Web Backend Developer"
-        },
-        "ticketTitle": {
-          "type": "string",
-          "example": "Lost Database Access"
-        },
-        "ticketDescription": {
-          "type": "string",
-          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
-        },
-        "dateAndTime": {
-          "type": "string",
-          "example": "2023-11-18T00:00:00.000+00:00"
-        },
-        "priorityLevel": {
-          "type": "string",
-          "example": "High"
-        }
-      }
-    },
-    "TicketOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "object",
-          "properties": {}
-        },
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "email": {
-          "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "phoneNumber": {
-          "type": "string",
-          "example": "123-123-3333"
-        },
-        "jobPosition": {
-          "type": "string",
-          "example": "Web Backend Developer"
-        },
-        "ticketTitle": {
-          "type": "string",
-          "example": "Lost Database Access"
-        },
-        "ticketDescription": {
-          "type": "string",
-          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
-        },
-        "dateAndTime": {
-          "type": "string",
-          "example": "2023-11-18T00:00:00.000+00:00"
-        },
-        "priorityLevel": {
-          "type": "string",
-          "example": "High"
-        }
-      }
-    },
-    "TicketOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/TicketOutput"
-      }
-    },
-    "TicketIdNotFound": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "No ticket found with ID 65592886744f7d0ebe92c28d"
-        }
-      }
-    },
-    "UserId": {
-      "type": "string",
-      "example": "6554f4f588e34040ea6a2085"
-    },
-    "UserInput": {
-      "type": "object",
-      "properties": {
-        "firstName": {
-          "type": "string",
-          "example": "Marcos"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "Antunes"
-        },
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "email": {
-          "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "supersecretpassword"
-        },
-        "jobPosition": {
-          "type": "string",
-          "example": "Web Backend Developer"
-        }
-      }
-    },
-    "UserOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "object",
-          "properties": {}
-        },
-        "firstName": {
-          "type": "string",
-          "example": "Marcos"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "Antunes"
-        },
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "email": {
-          "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "$2a$10$VP1sVEWqrbU5p.ICZZO7I.qAXkkPpOXrWKxbNeqQiF5IHI58TdanD"
-        },
-        "jobPosition": {
-          "type": "string",
-          "example": "Web Backend Developer"
-        }
-      }
-    },
-    "UserOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/UserOuput"
-      }
-    },
-    "UserLogin": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "supersecretpassword"
         }
       }
     }
