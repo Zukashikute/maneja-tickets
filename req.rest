@@ -1,4 +1,15 @@
-POST http://localhost:8080/auth/create HTTP/1.1
+@local = http://localhost:8080
+@deployed = https://maneja-tickets.onrender.com
+
+// Set to "local" or "deployed" based on which environemnt you're testing.
+@host = {{deployed}}
+
+#################
+# USERS
+#################
+
+### CREATE USER
+POST {{host}}/auth/create HTTP/1.1
 Content-Type: application/json
 
 {
@@ -8,12 +19,10 @@ Content-Type: application/json
     "email": "marcos@antunes.com",
     "password": "testing123",
     "jobPosition": "web backend developer"
-
-
 }
 
-###
-POST http://localhost:8080/auth/login HTTP/1.1
+### LOGIN
+POST {{host}}/auth/login HTTP/1.1
 Content-Type: application/json
 
 {  
@@ -21,34 +30,39 @@ Content-Type: application/json
     "password": "testing123"
 }
 
-###
-POST http://localhost:8080/tickets/create-ticket HTTP/1.1
+### LOG OUT
+GET {{host}}/auth/logout
+
+
+#################
+# TICKETS
+#################
+
+### GET TICKET BY ID
+GET {{host}}/tickets/65592886744f7d0ebe92c28d
+
+### CREATE TICKET
+POST {{host}}/tickets HTTP/1.1
 Content-Type: application/json
 
 {
-            "username": "Marcos Antunes",
-            "email": "marcos@antunes.com",
-            "phoneNumber": "123-123-3333",
-            "jobPosition": "Web Backend Developer",
-            "ticketTitle": "New test",
-            "ticketDescription": "Testing 456"
+  "username": "Batman",
+  "email": "bruce@wayne.com",
+  "phoneNumber": "123-123-3333",
+  "jobPosition": "Vigilante",
+  "ticketTitle": "Batmobile Won't Start",
+  "ticketDescription": "The Batmobile won't start. Gotham needs me, but it says it needs the latest software update.",
+  "dateAndTime": "2023-11-18T00:00:00.000+00:00",
+  "priorityLevel": "Medium"
 }
 
-###
-PUT http://localhost:8080/tickets/update-ticket/655e7e68e0a2c13f6042bd65 HTTP/1.1
+### UPDATE TICKET
+PUT {{host}}/tickets/65592886744f7d0ebe92c28d HTTP/1.1
 Content-Type: application/json
 
 {
-            "ticketTitle": "New test",
-            "ticketDescription": "Updating",
-            "priorityLevel": "Medium" 
+  "priorityLevel": "High"
 }
 
-###
-GET http://localhost:8080/tickets/655e7e68e0a2c13f6042bd65
-
-###
-GET http://localhost:8080/tickets/
-
-###
-GET http://localhost:8080/auth/logout
+### DELETE TICKET BY ID
+DELETE {{host}}/tickets/65592886744f7d0ebe92c28d
