@@ -43,6 +43,7 @@ app.use('/auth', authRoutes);
 
 
 
+
 db.mongoose
   .connect(db.url)
   .then(() => {
@@ -54,3 +55,5 @@ db.mongoose
     console.log('Cannot connect to the database!', err);
     process.exit();
   });
+
+  module.exports = app;

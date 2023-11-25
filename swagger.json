@@ -265,6 +265,123 @@
         ],
         "responses": {
           "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tickets/": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Get all tickets",
+        "description": "Get all tickets data from the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/tickets/delete-ticket/{id}": {
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Delete a ticket by ID.",
+        "description": "Deletes a specified ticket from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "All fields of a new ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "Ticket ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/TicketIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      }
+    },
+    "/resolutions/": {
+      "get": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Get all resolution tickets",
+        "description": "Get all resolution tickets data from the database",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/resolutions/{id}": {
+      "get": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Get a resolution ticket by ID.",
+        "description": "Retrieve a specified resolution ticket from the database.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The resolution ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/ResolutionId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "Retrieved",
             "schema": {
               "$ref": "#/definitions/TicketOutput"
@@ -325,13 +442,96 @@
         ]
       }
     },
-    "/tickets/delete-ticket/{id}": {
+    "/resolutions/resolutions": {
+      "post": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Create a new resolution.",
+        "description": "Creates and inserts a new ticket resoluition into the database using a list of fields and values.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resolution": {
+                  "example": "any"
+                },
+                "employeeAssigned": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/resolutions/resolutions/{id}": {
+      "put": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Update a resolution by ID.",
+        "description": "Updates an existing resolution in the database, given a list of any number of fields and a new values for each.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resolution": {
+                  "example": "any"
+                },
+                "employeeAssigned": {
+                  "example": "any"
+                },
+                "ticketStatus": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/resolutions/delete-resolution/{id}": {
       "delete": {
         "tags": [
-          "Tickets"
+          "Resolution"
         ],
-        "summary": "Delete a ticket by ID.",
-        "description": "Deletes a specified ticket from the database.",
+        "summary": "Delete a resolution by ID.",
+        "description": "Deletes a specified resolution from the database.",
         "parameters": [
           {
             "name": "id",

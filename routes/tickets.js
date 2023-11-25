@@ -5,7 +5,7 @@ const ticketsValidate = require('../utilities/ticketsValidation');
 const ticketsController = require('../controllers/tickets');
 
 // Create Ticket
-router.post('/create-ticket', validate.authCheck, ticketsController.createNewTicket);
+router.post('/create-ticket', validate.authCheck, ticketsValidate.createTicketRules(), ticketsValidate.checkTicketsCreateData, ticketsController.createNewTicket);
 
 // Update Ticket
 router.put('/update-ticket/:id', validate.authCheck, ticketsValidate.ticketsUpdateRules(), ticketsValidate.checkTicketsUpdateData, ticketsController.updateTicket);
