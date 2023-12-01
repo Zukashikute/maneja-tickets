@@ -74,9 +74,11 @@ const updateTicket = async (req, res) => {
     try {
         const _id = req.params.id;
         const ticket = {
-            ticketTitle: req.body.ticketTitle,
-            ticketDescription: req.body.ticketDescription,
+            title: req.body.title,
+            description: req.body.description,
             priorityLevel: req.body.priorityLevel,
+            status: req.body.status,
+            assignedEmployee: req.body.assignedEmployee,
         };
         const result = await Ticket.findByIdAndUpdate(_id, ticket, {
             new: true,
