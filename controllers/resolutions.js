@@ -2,21 +2,19 @@ const db = require('../models');
 require('dotenv').config();
 const Resolution = db.resolution;
 
-
-const getAllResolutions = () => {
+const getAllResolutions = async (req, res) => {
     // #swagger.tags = ['Resolution']
     // #swagger.summary = 'Get all resolution tickets'
     // #swagger.description = 'Get all resolution tickets data from the database'.
     try {
-        Resolution.find({})
-            .then((lists) => {
-                res.setHeader('Content-Type', 'application/json')
-                res.status(200).json(lists);
-            })
+        Resolution.find({}).then((lists) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(lists);
+        });
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err);
     }
-}
+};
 
 const getResolutionByID = async (req, res) => {
     //  #swagger.tags = ['Resolution']
@@ -30,28 +28,26 @@ const getResolutionByID = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
-        const ticketId = new ObjectId(req.params.id);
-        if (!ticketId) {
-            res.status(400).send({ message: 'Invalid resolution ticket ID Supplied' });
+        const _id = req.params.id;
+        if (!_id) {
+            res.status(400).send({
+                message: 'Invalid resolution ticket ID Supplied',
+            });
             return;
             /*  #swagger.responses[400] = {
                     description: 'Invalid Resolution Ticket ID',
                     schema: { message: 'Invalid resolution ticket ID Supplied' }
             } */
         }
-        const result = await Resolution.find({ _id: ticketId }).then((data) => {
-            res.status(201).send(data);
+        const result = await Resolution.find({ _id: _id }).then((data) => {
+            res.status(200).send(data);
         });
-
-        result.toArray().then((lists) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists[0]);
-            /*  #swagger.responses[200] = {
-                    description: 'Retrieved',
-                    schema: { $ref: '#/definitions/TicketOutput' }
-            } */
-        });
+        /*  #swagger.responses[200] = {
+                description: 'Retrieved',
+                schema: { $ref: '#/definitions/TicketOutput' }
+        } */
     } catch (error) {
+        console.log(error);
         res.status(500).json(error);
     }
 };
@@ -59,12 +55,12 @@ const getResolutionByID = async (req, res) => {
 const createNewResolution = async (req, res) => {
     //  #swagger.tags = ['Resolution']
     //  #swagger.summary = 'Create a new resolution.'
-    //  #swagger.description = 'Creates and inserts a new ticket resoluition into the database using a list of fields and values.'
+    //  #swagger.description = 'Creates and inserts a new ticket resolution into the database using a list of fields and values.'
     try {
         const newResolution = new Resolution({
-            // resolutionStatus: req.body.ticketStatus,
-            resolution: req.body.resolution,
-            employeeAssigned: req.body.employeeAssigned,
+            ticketId: req.body.ticketId,
+            description: req.body.description,
+            resolvedByEmployee: req.body.resolvedByEmployee,
         });
 
         await newResolution.save().then((data) => {
@@ -83,13 +79,16 @@ const updateResolution = async (req, res) => {
     try {
         const _id = req.params.id;
         const resolution = {
-            resolution: req.body.resolution,
-            employeeAssigned: req.body.employeeAssigned,
-            resolutionStatus: req.body.ticketStatus,
+            description: req.body.description,
+            resolvedByEmployee: req.body.resolvedByEmployee,
         };
-        const result = await Resolution.findByIdAndUpdate(_id, resolution, { new: true });
+        const result = await Resolution.findByIdAndUpdate(_id, resolution, {
+            new: true,
+        });
         if (!result) {
-            return res.status(404).send({ message: 'No Resolution found with id ' + _id })
+            return res
+                .status(404)
+                .send({ message: 'No Resolution found with id ' + _id });
         }
         return res.status(200).json(result);
     } catch (error) {
@@ -107,21 +106,25 @@ const deleteResolution = async (req, res) => {
             res.status(400).send({ message: 'Invalid ticket ID Supplied' });
             return;
         }
-        const result = await Resolution.deleteOne({ _id: _id }).then(
-            (data) => {
-                if (data.deletedCount > 0) {
-                    res.status(201).send();
-                } else {
-                    res.status(500).json(
-                        data.error ||
+        const result = await Resolution.deleteOne({ _id: _id }).then((data) => {
+            if (data.deletedCount > 0) {
+                res.status(201).send();
+            } else {
+                res.status(500).json(
+                    data.error ||
                         'Some error occurred while deleting the resolution.'
-                    );
-                }
+                );
             }
-        );
+        });
     } catch (error) {
         res.status(500).json(error);
     }
 };
 
-module.exports = { getAllResolutions, getResolutionByID, createNewResolution, updateResolution, deleteResolution };
+module.exports = {
+    getAllResolutions,
+    getResolutionByID,
+    createNewResolution,
+    updateResolution,
+    deleteResolution,
+};
