@@ -10,12 +10,28 @@ router.get('/', validate.authCheck, resolutionsController.getAllResolutions);
 router.get('/:id', validate.authCheck, resolutionsController.getResolutionByID);
 
 // Create Resolution
-router.post('/resolutions', validate.authCheck, resolutionValidate.resolutionRules(), resolutionValidate.checkResolutionsData, resolutionsController.createNewResolution);
+router.post(
+    '/',
+    validate.authCheck,
+    // resolutionValidate.resolutionRules(),
+    // resolutionValidate.checkResolutionsData,
+    resolutionsController.createNewResolution
+);
 
 // Update Resolution using existing ID
-router.put('/resolutions/:id', validate.authCheck, resolutionValidate.resolutionRules(), resolutionValidate.checkResolutionsData, resolutionsController.updateResolution);
+router.put(
+    '/:id',
+    validate.authCheck,
+    // resolutionValidate.resolutionRules(),
+    // resolutionValidate.checkResolutionsData,
+    resolutionsController.updateResolution
+);
 
 // Delete a Resolution by ID
-router.delete('/delete-resolution/:id', validate.authCheck, resolutionsController.deleteResolution);
+router.delete(
+    '/:id',
+    validate.authCheck,
+    resolutionsController.deleteResolution
+);
 
 module.exports = router;
