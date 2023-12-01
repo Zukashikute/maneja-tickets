@@ -26,6 +26,7 @@ const createAccount = async (req, res) => {
         lastName: req.body.lastName,
         username: req.body.username,
         email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
         password: hashedPassword,
         jobPosition: req.body.jobPosition,
     });
@@ -100,4 +101,43 @@ const userLogout = async (req, res) => {
     return res.redirect('/');
 };
 
-module.exports = { createAccount, userLogin, userLogout };
+const userUpdate = async (req, res) => {
+    try {
+    const _id = req.params.id
+    const user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        jobPosition: req.body.jobPosition    
+    };
+    const result = await Users.findByIdAndUpdate(_id, user, { new: true});
+    if(!result){
+    return res.status(404).send({ message: 'No user found with ID ' + _id})    
+    }
+    return res.status(200).json(result);
+    } catch (error) {
+    return res.status(500).json(error);
+    }
+}
+
+const userDelete = async (req, res) => {
+try{
+const _id = req.params.id
+if(!_id){
+return res.status(404).send({ message: 'No user found with ID ' + _id})    
+}
+const result = await Users.deleteOne({ _id: _id }).then((data) => {
+if(data.deletedCount > 0){
+res.status(200).send({ message: 'User account deleted.'});
+} else {
+res.status(500).json(data.error || 'Sorry, some error ocurred while deleting the user account.')    
+}    
+})
+}catch (error) {
+res.status(500).json(error)
+}     
+}
+
+module.exports = { createAccount, userLogin, userLogout, userUpdate, userDelete };
