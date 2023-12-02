@@ -85,3 +85,34 @@ Content-Type: application/json
 
 ### DELETE TICKET BY ID
 DELETE {{local}}/tickets/65592886744f7d0ebe92c28d
+
+#################
+# RESOLUTIONS
+#################
+
+### GET ALL RESOLUTIONS
+GET {{local}}/resolutions/
+
+### GET RESOLUTION BY ID
+GET {{local}}/resolutions/656a290cc420deb53c7d03e6
+
+### CREATE RESOLUTION
+POST {{local}}/resolutions HTTP/1.1
+Content-Type: application/json
+
+{
+  "ticketId": "6565e2555f22d1e51377e14b",
+  "description": "Updated the Batmobile software",
+  "resolvedByEmployee": "6569bcfd23faef37e870c298"
+}
+
+### UPDATE RESOLUTION
+PUT {{local}}/resolutions/656a290cc420deb53c7d03e6 HTTP/1.1
+Content-Type: application/json
+
+{
+  "description": "Updated the Batmobile software to version 19.39"
+}
+
+### DELETE RESOLUTION BY ID
+DELETE {{local}}/resolutions/656a290cc420deb53c7d03e6
