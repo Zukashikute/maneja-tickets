@@ -2,7 +2,7 @@
 @deployed = https://maneja-tickets.onrender.com
 
 // Set to "local" or "deployed" based on which environemnt you're testing.
-@host = {{deployed}}
+@host = {{local}}
 
 #################
 # USERS
@@ -57,26 +57,26 @@ GET {{local}}/auth/logout
 # TICKETS
 #################
 
+### GET ALL TICKETS
+GET {{local}}/tickets/
+
 ### GET TICKET BY ID
-GET {{local}}/tickets/65592886744f7d0ebe92c28d
+GET {{local}}/tickets/656a22bd72039c93a3d50222
 
 ### CREATE TICKET
 POST {{local}}/tickets HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "Batman",
-  "email": "bruce@wayne.com",
-  "phoneNumber": "123-123-3333",
-  "jobPosition": "Vigilante",
-  "ticketTitle": "Batmobile Won't Start",
-  "ticketDescription": "The Batmobile won't start. Gotham needs me, but it says it needs the latest software update.",
-  "dateAndTime": "2023-11-18T00:00:00.000+00:00",
-  "priorityLevel": "Medium"
+  "userId": "656a1ba79b85f94a3b261761",
+  "title": "Batmobile Won't Start",
+  "description": "The Batmobile won't start. Gotham needs me, but it says it needs the latest software update.",
+  "priorityLevel": "Medium",
+  "assignedEmployee": "6569bcfd23faef37e870c298"
 }
 
 ### UPDATE TICKET
-PUT {{local}}/tickets/65592886744f7d0ebe92c28d HTTP/1.1
+PUT {{local}}/tickets/656a22bd72039c93a3d50222 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -85,3 +85,34 @@ Content-Type: application/json
 
 ### DELETE TICKET BY ID
 DELETE {{local}}/tickets/65592886744f7d0ebe92c28d
+
+#################
+# RESOLUTIONS
+#################
+
+### GET ALL RESOLUTIONS
+GET {{local}}/resolutions/
+
+### GET RESOLUTION BY ID
+GET {{local}}/resolutions/656a290cc420deb53c7d03e6
+
+### CREATE RESOLUTION
+POST {{local}}/resolutions HTTP/1.1
+Content-Type: application/json
+
+{
+  "ticketId": "6565e2555f22d1e51377e14b",
+  "description": "Updated the Batmobile software",
+  "resolvedByEmployee": "6569bcfd23faef37e870c298"
+}
+
+### UPDATE RESOLUTION
+PUT {{local}}/resolutions/656a290cc420deb53c7d03e6 HTTP/1.1
+Content-Type: application/json
+
+{
+  "description": "Updated the Batmobile software to version 19.39"
+}
+
+### DELETE RESOLUTION BY ID
+DELETE {{local}}/resolutions/656a290cc420deb53c7d03e6

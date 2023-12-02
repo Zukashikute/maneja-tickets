@@ -34,12 +34,11 @@ const createNewTicket = async (req, res) => {
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
     try {
         const newTicket = new Ticket({
-            username: req.body.username,
-            email: req.body.email,
-            phoneNumber: req.body.phoneNumber,
-            jobPosition: req.body.jobPosition,
-            ticketTitle: req.body.ticketTitle,
-            ticketDescription: req.body.ticketDescription,
+            userId: req.body.userId,
+            title: req.body.title,
+            description: req.body.description,
+            priorityLevel: req.body.priorityLevel,
+            assignedEmployee: req.body.assignedEmployee,
         });
 
         await newTicket.save().then((data) => {
@@ -75,9 +74,11 @@ const updateTicket = async (req, res) => {
     try {
         const _id = req.params.id;
         const ticket = {
-            ticketTitle: req.body.ticketTitle,
-            ticketDescription: req.body.ticketDescription,
+            title: req.body.title,
+            description: req.body.description,
             priorityLevel: req.body.priorityLevel,
+            status: req.body.status,
+            assignedEmployee: req.body.assignedEmployee,
         };
         const result = await Ticket.findByIdAndUpdate(_id, ticket, {
             new: true,
@@ -156,7 +157,7 @@ const deleteTicket = async (req, res) => {
         }
         const result = await Ticket.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
-                res.status(200).send();
+                res.status(200).send({message: 'Ticket deleted|'});
                 /*  #swagger.responses[200] = {
                     description: 'Deleted'
                 } */
