@@ -108,7 +108,9 @@ const deleteResolution = async (req, res) => {
         }
         const result = await Resolution.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
+              
                 res.status(201).send({message: 'Resolution deleted!'});
+
             } else {
                 res.status(500).json(
                     data.error ||
