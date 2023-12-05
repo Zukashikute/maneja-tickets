@@ -188,11 +188,10 @@ const userDelete = async (req, res) => {
 };
 
 
-
 module.exports = {
     createAccount,
     userLogin,
     userLogout,
     userUpdate,
-    userDelete
+    userDelete,
 };
