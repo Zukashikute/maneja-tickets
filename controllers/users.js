@@ -79,7 +79,7 @@ const userLogin = async (req, res) => {
                 maxAge: 3600 * 1000,
             });
             console.log(`User ${email} logged in!`);
-            res.status(200).json({ token: accessToken });
+            return res.redirect('/');
         } else {
             res.send('Email or password is not valid');
         }
