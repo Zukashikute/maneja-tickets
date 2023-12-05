@@ -157,7 +157,7 @@ const deleteTicket = async (req, res) => {
         }
         const result = await Ticket.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
-                res.status(200).send();
+                res.status(200).send({ message: 'Ticket deleted!'});
                 /*  #swagger.responses[200] = {
                     description: 'Deleted'
                 } */
