@@ -16,7 +16,7 @@ Content-Type: application/json
     "firstName": "Marcos",
     "lastName": "Antunes",
     "username": "marcos jr",
-    "email": "marcos@antunes.com",
+    "email": "marcos@antuness.com",
     "phoneNumber": "123-123-3333",
     "password": "testing123",
     "jobPosition": "web backend developer"

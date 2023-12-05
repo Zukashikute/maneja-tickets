@@ -2,6 +2,8 @@ const { body, validationResult } = require("express-validator");
 const validate = {};
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const db = require('../models');
+const Users = db.users;
 
 validate.registrationRules = () => {
   return [
@@ -24,7 +26,13 @@ validate.registrationRules = () => {
       .trim()
       .isEmail()
       .normalizeEmail()
-      .withMessage("A valid email is required."),
+      .withMessage("A valid email is required.")
+      .custom(async (email) => {
+        const emailExists = await Users.findOne({email})
+        if(emailExists) {
+          throw new Error("Email exists. Please, log in or use different email")
+        }
+    }),
 
     body("phoneNumber")
       .trim()
@@ -44,8 +52,7 @@ validate.registrationRules = () => {
 };
 
 validate.checkRegisterData = async (req, res, next) => {
-  const { firstName, lastName, username, email, password, jobPosition } =
-    req.body;
+  const { firstName, lastName, username, email, password, jobPosition } = req.body;
   let errors = [];
   errors = validationResult(req);
   if (!errors.isEmpty()) {

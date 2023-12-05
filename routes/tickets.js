@@ -7,8 +7,8 @@ const ticketsController = require('../controllers/tickets');
 router.post(
     '/',
     validate.authCheck,
-    // ticketsValidate.createTicketRules(),
-    // ticketsValidate.checkTicketsCreateData,
+    ticketsValidate.createTicketRules(),
+    ticketsValidate.checkTicketsCreateData,
     ticketsController.createNewTicket
 );
 
@@ -16,8 +16,8 @@ router.post(
 router.put(
     '/:id',
     validate.authCheck,
-    // ticketsValidate.ticketsUpdateRules(),
-    // ticketsValidate.checkTicketsUpdateData,
+    ticketsValidate.ticketsUpdateRules(),
+    ticketsValidate.checkTicketsUpdateData,
     ticketsController.updateTicket
 );
 

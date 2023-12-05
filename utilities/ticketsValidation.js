@@ -3,66 +3,73 @@ const validate = {};
 
 validate.createTicketRules = () => {
   return [
-    body('username')
-      .trim()
-      .isLength({ min: 3 })
-      .withMessage('Please provide a valid username'),
-
-    body('email')
-      .trim()
-      .isEmail()
-      .normalizeEmail()
-      .withMessage('A valid email is required'),
-
-    body('phoneNumber')
-      .trim()
-      .isLength({ min: 10 })
-      .withMessage('Please provide a phone number.'),
-
-    body('jobPosition')
+    body('userId')
       .trim()
       .isLength({ min: 1 })
-      .withMessage('Please provide a valid job position.'),
+      .isAlphanumeric()
+      .withMessage('Please provide a valid user ID'),
 
-    body('ticketTitle')
+      body('title')
       .trim()
       .isLength({ min: 1 })
-      .isString()
-      .withMessage('Please provide a valid ticket title'),
+      .withMessage('Please provide a valid title'),
 
-    body('ticketDescription')
-      .trim()
-      .isLength({ min: 5 })
-      .isString()
-      .withMessage('Please provide a valid ticket description'),
-  ];
-};
-
-validate.ticketsUpdateRules = () => {
-  return [
-    body('ticketTitle')
+      body('description')
       .trim()
       .isLength({ min: 1 })
-      .isString()
-      .withMessage('Please provide a valid ticket title'),
+      .withMessage('Please provide a valid description'),
 
-    body('ticketDescription')
-      .trim()
-      .isLength({ min: 5 })
-      .isString()
-      .withMessage('Please provide a valid ticket description'),
-
-    body('priorityLevel')
+      body('priorityLevel')
       .trim()
       .isString()
       .isLength({ min: 3 })
       .isIn(['Low', 'Medium', 'High'])
       .withMessage('Please choose Low, Medium or High priority level.'),
+
+      body('assignedEmployee')
+      .trim()
+      .isLength({ min: 1 })
+      .isAlphanumeric()
+      .withMessage('Please provide a valid assigned Employee ID'),
+  ];
+};
+
+validate.ticketsUpdateRules = () => {
+  return [
+    body('title')
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage('Please provide a valid title'),
+
+      body('description')
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage('Please provide a valid description'),
+
+      body('priorityLevel')
+      .trim()
+      .isString()
+      .isLength({ min: 3 })
+      .isIn(['Low', 'Medium', 'High'])
+      .withMessage('Please choose Low, Medium or High priority level.'),
+
+      body('status')
+      .trim()
+      .isString()
+      .isLength({ min: 3 })
+      .isIn(['New', 'In Progress', 'Pending', 'Resolved', 'Closed'])
+      .withMessage('Please choose New, In Progress, Pending, Resolved or Closed status.'),
+
+      body('assignedEmployee')
+      .trim()
+      .isLength({ min: 1 })
+      .isAlphanumeric()
+      .withMessage('Please provide a valid assigned Employee ID'),
   ];
 };
 
 validate.checkTicketsCreateData = async (req, res, next) => {
-    const { username, email, phoneNumber, jobPosition, ticketTitle, ticketDescription, priorityLevel } = req.body;
+    const { userId, title, description, priorityLevel, assignedEmployee } = req.body;
     let errors = [];
     errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -73,7 +80,7 @@ validate.checkTicketsCreateData = async (req, res, next) => {
   };
 
 validate.checkTicketsUpdateData = async (req, res, next) => {
-  const { ticketTitle, ticketDescription, priorityLevel } = req.body;
+  const { title, description, priorityLevel, status, assignedEmployee } = req.body;
   let errors = [];
   errors = validationResult(req);
   if (!errors.isEmpty()) {

@@ -37,9 +37,9 @@ describe('Users controller test', () => {
   it('Should create an user', async () => {
     const res = await request(app).post('/auth/create').send({
       firstName: 'Marcos',
-      lastName: 'Antunes',
+      lastName: 'test',
       username: 'marcos jr',
-      email: 'test@teste.com',
+      email: 'test@test.com',
       phoneNumber: '123-123-3333',
       password: '123testing456',
       jobPosition: 'web backend developer',
@@ -125,6 +125,7 @@ describe('Tickets Controller test', () => {
         title: 'Test',
         description: 'Testing the update ticket function.',
         priorityLevel: 'High',
+        status: 'Pending',
         assignedEmployee: '6569bcfd23faef37e870c298',
       });
     expect(res.statusCode).toBe(200);
@@ -191,7 +192,7 @@ describe('Resolution controller test', () => {
       .delete('/resolutions/' + lastResolutionId)
       .set('Cookie', 'jwt=' + token);
 
-    expect(res.statusCode).toBe(201);
+    expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty('message');
   });
 });
