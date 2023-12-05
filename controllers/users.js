@@ -79,7 +79,7 @@ const userLogin = async (req, res) => {
                 maxAge: 3600 * 1000,
             });
             console.log(`User ${email} logged in!`);
-            return res.redirect('/');
+            res.status(200).json({ token: accessToken });
         } else {
             res.send('Email or password is not valid');
         }
@@ -171,7 +171,7 @@ const userDelete = async (req, res) => {
         }
         const result = await Users.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
-                res.status(200).send();
+                res.status(200).send({ message: 'User account deleted.'});
                 /*  #swagger.responses[200] = {
                     description: 'Deleted'
                 } */
@@ -186,6 +186,7 @@ const userDelete = async (req, res) => {
         res.status(500).json(error);
     }
 };
+
 
 module.exports = {
     createAccount,

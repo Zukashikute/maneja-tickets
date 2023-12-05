@@ -155,7 +155,7 @@ const deleteResolution = async (req, res) => {
         }
         const result = await Resolution.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
-                res.status(200).send();
+                res.status(200).send({message: 'Resolution deleted!'});
                 /*  #swagger.responses[200] = {
                     description: 'Deleted'
                 } */
