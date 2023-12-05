@@ -102,42 +102,95 @@ const userLogout = async (req, res) => {
 };
 
 const userUpdate = async (req, res) => {
+    //  #swagger.tags = ['Users']
+    //  #swagger.summary = 'Update a user.'
+    //  #swagger.description = 'Updates an existing user in the database, given a list of any number of fields and a new values for each.
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'The ID of the user to be updated.',
+            required: true,
+            schema: { $ref: '#/definitions/UserId' }
+    } */
+    /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Any number of fields of the user object to be updated, along with their new values.',
+            required: true,
+            schema: { $ref: '#/definitions/UserUpdateInput' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]'
     try {
-    const _id = req.params.id
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        username: req.body.username,
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber,
-        jobPosition: req.body.jobPosition    
-    };
-    const result = await Users.findByIdAndUpdate(_id, user, { new: true});
-    if(!result){
-    return res.status(404).send({ message: 'No user found with ID ' + _id})    
-    }
-    return res.status(200).json(result);
+        const _id = req.params.id;
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            username: req.body.username,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            jobPosition: req.body.jobPosition,
+        };
+        const result = await Users.findByIdAndUpdate(_id, user, { new: true });
+        if (!result) {
+            return res
+                .status(404)
+                .send({ message: 'No user found with ID ' + _id });
+            /*  #swagger.responses[404] = {
+                    description: 'User ID Not Found',
+                    schema: { $ref: '#/definitions/UserIdNotFound' }
+            } */
+        }
+        return res.status(200).json(result);
+        /*  #swagger.responses[200] = {
+                description: 'Updated'
+        } */
     } catch (error) {
-    return res.status(500).json(error);
+        return res.status(500).json(error);
     }
-}
+};
 
 const userDelete = async (req, res) => {
-try{
-const _id = req.params.id
-if(!_id){
-return res.status(404).send({ message: 'No user found with ID ' + _id})    
-}
-const result = await Users.deleteOne({ _id: _id }).then((data) => {
-if(data.deletedCount > 0){
-res.status(200).send({ message: 'User account deleted.'});
-} else {
-res.status(500).json(data.error || 'Sorry, some error ocurred while deleting the user account.')    
-}    
-})
-}catch (error) {
-res.status(500).json(error)
-}     
-}
+    //  #swagger.tags = ['Users']
+    //  #swagger.summary = 'Delete a user by ID.'
+    //  #swagger.description = 'Deletes a specified user from the database.'
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'The ID of the user to be deleted.',
+            required: true,
+            schema: { $ref: '#/definitions/UserId' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
+    try {
+        const _id = req.params.id;
+        if (!_id) {
+            return res
+                .status(404)
+                .send({ message: 'No user found with ID ' + _id });
+            /*  #swagger.responses[404] = {
+                    description: 'User ID Not Found',
+                    schema: { $ref: '#/definitions/UserIdNotFound' }
+                } */
+        }
+        const result = await Users.deleteOne({ _id: _id }).then((data) => {
+            if (data.deletedCount > 0) {
+                res.status(200).send();
+                /*  #swagger.responses[200] = {
+                    description: 'Deleted'
+                } */
+            } else {
+                res.status(500).json(
+                    data.error ||
+                        'Sorry, some error ocurred while deleting the user account.'
+                );
+            }
+        });
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
 
-module.exports = { createAccount, userLogin, userLogout, userUpdate, userDelete };
+module.exports = {
+    createAccount,
+    userLogin,
+    userLogout,
+    userUpdate,
+    userDelete,
+};

@@ -101,6 +101,103 @@
         }
       }
     },
+    "/auth/account/{id}": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update a user.",
+        "description": "Updates an existing user in the database, given a list of any number of fields and a new values for each.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the user to be updated.",
+            "schema": {
+              "$ref": "#/definitions/UserId"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Any number of fields of the user object to be updated, along with their new values.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserUpdateInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "404": {
+            "description": "User ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/UserIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete a user by ID.",
+        "description": "Deletes a specified user from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the user to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/UserId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "User ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/UserIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      }
+    },
     "/auth/logout": {
       "get": {
         "tags": [
@@ -143,7 +240,7 @@
         }
       }
     },
-    "/tickets/create-ticket": {
+    "/tickets/": {
       "post": {
         "tags": [
           "Tickets"
@@ -185,231 +282,7 @@
             ]
           }
         ]
-      }
-    },
-    "/tickets/update-ticket/{id}": {
-      "put": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Update a ticket.",
-        "description": "Updates an existing ticket in the database, given a list of any number of fields and a new values for each.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the ticket to be updated.",
-            "schema": {
-              "$ref": "#/definitions/TicketId"
-            }
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Any number of fields of the ticket object to be updated, along with their new values.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/TicketInput"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "204": {
-            "description": "Updated"
-          },
-          "404": {
-            "description": "Ticket ID Not Found",
-            "schema": {
-              "$ref": "#/definitions/TicketIdNotFound"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BasicAuth": [
-              "write"
-            ],
-            "GoogleOAuth": [
-              "write"
-            ]
-          }
-        ]
-      }
-    },
-    "/tickets/{id}": {
-      "get": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Get a ticket by ID.",
-        "description": "Retrieve a specified ticket from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ticket object to be inserted.",
-            "schema": {
-              "$ref": "#/definitions/TicketId"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/tickets/": {
-      "get": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Get all tickets",
-        "description": "Get all tickets data from the database",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/tickets/delete-ticket/{id}": {
-      "delete": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Delete a ticket by ID.",
-        "description": "Deletes a specified ticket from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "All fields of a new ticket object to be inserted.",
-            "schema": {
-              "$ref": "#/definitions/TicketId"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Deleted"
-          },
-          "404": {
-            "description": "Ticket ID Not Found",
-            "schema": {
-              "$ref": "#/definitions/TicketIdNotFound"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BasicAuth": [
-              "write"
-            ],
-            "GoogleOAuth": [
-              "write"
-            ]
-          }
-        ]
-      }
-    },
-    "/resolutions/": {
-      "get": {
-        "tags": [
-          "Resolution"
-        ],
-        "summary": "Get all resolution tickets",
-        "description": "Get all resolution tickets data from the database",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/resolutions/{id}": {
-      "get": {
-        "tags": [
-          "Resolution"
-        ],
-        "summary": "Get a resolution ticket by ID.",
-        "description": "Retrieve a specified resolution ticket from the database.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The resolution ticket object to be inserted.",
-            "schema": {
-              "$ref": "#/definitions/ResolutionId"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Retrieved",
-            "schema": {
-              "$ref": "#/definitions/TicketOutput"
-            }
-          },
-          "404": {
-            "description": "Ticket ID Not Found",
-            "schema": {
-              "$ref": "#/definitions/TicketIdNotFound"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BasicAuth": [
-              "read"
-            ],
-            "GoogleOAuth": [
-              "read"
-            ]
-          }
-        ]
-      }
-    },
-    "/tickets/": {
+      },
       "get": {
         "tags": [
           "Tickets"
@@ -442,103 +315,121 @@
         ]
       }
     },
-    "/resolutions/resolutions": {
-      "post": {
-        "tags": [
-          "Resolution"
-        ],
-        "summary": "Create a new resolution.",
-        "description": "Creates and inserts a new ticket resoluition into the database using a list of fields and values.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "resolution": {
-                  "example": "any"
-                },
-                "employeeAssigned": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/resolutions/resolutions/{id}": {
+    "/tickets/{id}": {
       "put": {
         "tags": [
-          "Resolution"
+          "Tickets"
         ],
-        "summary": "Update a resolution by ID.",
-        "description": "Updates an existing resolution in the database, given a list of any number of fields and a new values for each.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "resolution": {
-                  "example": "any"
-                },
-                "employeeAssigned": {
-                  "example": "any"
-                },
-                "ticketStatus": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/resolutions/delete-resolution/{id}": {
-      "delete": {
-        "tags": [
-          "Resolution"
-        ],
-        "summary": "Delete a resolution by ID.",
-        "description": "Deletes a specified resolution from the database.",
+        "summary": "Update a ticket.",
+        "description": "Updates an existing ticket in the database, given a list of any number of fields and a new values for each.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "All fields of a new ticket object to be inserted.",
+            "description": "The ID of the ticket to be updated.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Any number of fields of the ticket object to be updated, along with their new values.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TicketUpdateInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "Updated"
+          },
+          "404": {
+            "description": "Ticket ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/TicketIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Get a ticket by ID.",
+        "description": "Retrieve a specified ticket from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ticket object to be inserted.",
+            "schema": {
+              "$ref": "#/definitions/TicketId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/TicketOutput"
+            }
+          },
+          "404": {
+            "description": "Ticket ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/TicketIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "read"
+            ],
+            "GoogleOAuth": [
+              "read"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Delete a ticket by ID.",
+        "description": "Deletes a specified ticket from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the ticket to be deleted.",
             "schema": {
               "$ref": "#/definitions/TicketId"
             }
@@ -575,13 +466,74 @@
         "tags": [
           "Resolution"
         ],
-        "summary": "Get all resolution tickets",
+        "summary": "Get all ticket resolutions.",
         "description": "Get all resolution tickets data from the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "schema": {
+              "$ref": "#/definitions/ResolutionOutputArray"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "read"
+            ],
+            "GoogleOAuth": [
+              "read"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Resolution"
+        ],
+        "summary": "Create a new resolution.",
+        "description": "Creates and inserts a new resolution into the database using a list of fields and values.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The resolution object to be inserted.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResolutionInput"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ResolutionOutput"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
       }
     },
     "/resolutions/{id}": {
@@ -589,18 +541,15 @@
         "tags": [
           "Resolution"
         ],
-        "summary": "Get a resolution ticket by ID.",
-        "description": "Retrieve a specified resolution ticket from the database.",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get a ticket resolution by ID.",
+        "description": "Retrieve a specified ticket resolution from the database.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "The resolution ticket object to be inserted.",
+            "description": "The resolution object to be inserted.",
             "schema": {
               "$ref": "#/definitions/ResolutionId"
             }
@@ -610,20 +559,17 @@
           "200": {
             "description": "Retrieved",
             "schema": {
-              "$ref": "#/definitions/TicketOutput"
+              "$ref": "#/definitions/ResolutionOutput"
             }
           },
-          "201": {
-            "description": "Created"
-          },
           "400": {
-            "description": "Invalid Resolution Ticket ID",
+            "description": "Invalid Resolution ID",
             "schema": {
               "type": "object",
               "properties": {
                 "message": {
                   "type": "string",
-                  "example": "Invalid resolution ticket ID Supplied"
+                  "example": "Invalid resolution ID Supplied"
                 }
               },
               "xml": {
@@ -645,46 +591,7 @@
             ]
           }
         ]
-      }
-    },
-    "/resolutions/resolutions": {
-      "post": {
-        "tags": [
-          "Resolution"
-        ],
-        "summary": "Create a new resolution.",
-        "description": "Creates and inserts a new ticket resoluition into the database using a list of fields and values.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "resolution": {
-                  "example": "any"
-                },
-                "employeeAssigned": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/resolutions/resolutions/{id}": {
+      },
       "put": {
         "tags": [
           "Resolution"
@@ -696,41 +603,56 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The resolution object to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/ResolutionId"
+            }
           },
           {
             "name": "body",
             "in": "body",
+            "description": "Any number of fields of the resolution object to be updated, along with their new values.",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "resolution": {
-                  "example": "any"
-                },
-                "employeeAssigned": {
-                  "example": "any"
-                },
-                "ticketStatus": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/ResolutionInput"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Deleted"
+          },
+          "204": {
+            "description": "Updated"
           },
           "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+            "description": "Resolution ID Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        }
-      }
-    },
-    "/resolutions/delete-resolution/{id}": {
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "Resolution"
@@ -742,123 +664,53 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The resolution object to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/ResolutionId"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
+            "description": "Deleted"
           },
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Resolution ID Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid ticket ID Supplied"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
       }
     }
   },
   "definitions": {
-    "GoogleUsersId": {
-      "type": "string",
-      "example": "6553fd4495e95588a3921cfd"
-    },
-    "GoogleUserInput": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "googleId": {
-          "type": "string",
-          "example": "106903543166470337016"
-        }
-      }
-    },
-    "GoogleUserOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "object",
-          "properties": {}
-        },
-        "username": {
-          "type": "string",
-          "example": "MarcosAntunes"
-        },
-        "googleId": {
-          "type": "string",
-          "example": "106903543166470337016"
-        }
-      }
-    },
-    "GoogleUserOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/GoogleUserOutput"
-      }
-    },
-    "ResolutionId": {
-      "type": "string",
-      "example": "6553fd4495e95588a3921cfd"
-    },
-    "ResolutionInput": {
-      "type": "object",
-      "properties": {
-        "ticketId": {
-          "type": "object",
-          "properties": {}
-        },
-        "ticketStatus": {
-          "type": "string",
-          "example": "Open"
-        },
-        "resolution": {
-          "type": "string",
-          "example": ""
-        },
-        "assignedEmployeeId": {
-          "type": "object",
-          "properties": {}
-        }
-      }
-    },
-    "ResolutionOutput": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "object",
-          "properties": {}
-        },
-        "ticketId": {
-          "type": "object",
-          "properties": {}
-        },
-        "ticketStatus": {
-          "type": "string",
-          "example": "Open"
-        },
-        "resolution": {
-          "type": "string",
-          "example": ""
-        },
-        "assignedEmployeeId": {
-          "type": "object",
-          "properties": {}
-        }
-      }
-    },
-    "ResolutionOutputArray": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ResolutionOutput"
-      }
-    },
     "SessionId": {
       "type": "string",
       "example": "j86VFszYE5_NOCBsOBLCkkmjPqDK2bT8"
@@ -899,106 +751,49 @@
         "$ref": "#/definitions/SessionOutput"
       }
     },
-    "TicketId": {
+    "GoogleUsersId": {
       "type": "string",
-      "example": "65592886744f7d0ebe92c28d"
+      "example": "6553fd4495e95588a3921cfd"
     },
-    "TicketInput": {
+    "GoogleUserInput": {
       "type": "object",
       "properties": {
         "username": {
           "type": "string",
           "example": "MarcosAntunes"
         },
-        "email": {
+        "googleId": {
           "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "phoneNumber": {
-          "type": "string",
-          "example": "123-123-3333"
-        },
-        "jobPosition": {
-          "type": "string",
-          "example": "Web Backend Developer"
-        },
-        "ticketTitle": {
-          "type": "string",
-          "example": "Lost Database Access"
-        },
-        "ticketDescription": {
-          "type": "string",
-          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
-        },
-        "dateAndTime": {
-          "type": "string",
-          "example": "2023-11-18T00:00:00.000+00:00"
-        },
-        "priorityLevel": {
-          "type": "string",
-          "example": "High"
+          "example": "106903543166470337016"
         }
       }
     },
-    "TicketOutput": {
+    "GoogleUserOutput": {
       "type": "object",
       "properties": {
         "_id": {
-          "type": "object",
-          "properties": {}
+          "type": "string",
+          "example": "6553fd4495e95588a3921cfd"
         },
         "username": {
           "type": "string",
           "example": "MarcosAntunes"
         },
-        "email": {
+        "googleId": {
           "type": "string",
-          "example": "marcos@antunes.com"
-        },
-        "phoneNumber": {
-          "type": "string",
-          "example": "123-123-3333"
-        },
-        "jobPosition": {
-          "type": "string",
-          "example": "Web Backend Developer"
-        },
-        "ticketTitle": {
-          "type": "string",
-          "example": "Lost Database Access"
-        },
-        "ticketDescription": {
-          "type": "string",
-          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
-        },
-        "dateAndTime": {
-          "type": "string",
-          "example": "2023-11-18T00:00:00.000+00:00"
-        },
-        "priorityLevel": {
-          "type": "string",
-          "example": "High"
+          "example": "106903543166470337016"
         }
       }
     },
-    "TicketOutputArray": {
+    "GoogleUserOutputArray": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/TicketOutput"
-      }
-    },
-    "TicketIdNotFound": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "No ticket found with ID 65592886744f7d0ebe92c28d"
-        }
+        "$ref": "#/definitions/GoogleUserOutput"
       }
     },
     "UserId": {
       "type": "string",
-      "example": "6554f4f588e34040ea6a2085"
+      "example": "6568d4ca16eaa1dfd891beca"
     },
     "UserInput": {
       "type": "object",
@@ -1019,6 +814,10 @@
           "type": "string",
           "example": "marcos@antunes.com"
         },
+        "phoneNumber": {
+          "type": "string",
+          "example": "123-123-3333"
+        },
         "password": {
           "type": "string",
           "example": "supersecretpassword"
@@ -1027,14 +826,60 @@
           "type": "string",
           "example": "Web Backend Developer"
         }
-      }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "phoneNumber",
+        "password",
+        "jobPosition"
+      ]
+    },
+    "UserUpdateInput": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Marcos"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Antunes"
+        },
+        "username": {
+          "type": "string",
+          "example": "MarcosAntunes"
+        },
+        "email": {
+          "type": "string",
+          "example": "marcos@antunes.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "123-123-3333"
+        },
+        "jobPosition": {
+          "type": "string",
+          "example": "Web Backend Developer"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "phoneNumber",
+        "jobPosition"
+      ]
     },
     "UserOutput": {
       "type": "object",
       "properties": {
         "_id": {
-          "type": "object",
-          "properties": {}
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
         },
         "firstName": {
           "type": "string",
@@ -1051,6 +896,10 @@
         "email": {
           "type": "string",
           "example": "marcos@antunes.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "123-123-3333"
         },
         "password": {
           "type": "string",
@@ -1078,6 +927,201 @@
         "password": {
           "type": "string",
           "example": "supersecretpassword"
+        }
+      }
+    },
+    "UserIdNotFound": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No user found with ID 6568d4ca16eaa1dfd891beca"
+        }
+      }
+    },
+    "TicketId": {
+      "type": "string",
+      "example": "6565e2555f22d1e51377e14b"
+    },
+    "TicketInput": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
+        },
+        "title": {
+          "type": "string",
+          "example": "Lost Database Access"
+        },
+        "description": {
+          "type": "string",
+          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
+        },
+        "priorityLevel": {
+          "type": "string",
+          "example": "High"
+        },
+        "assignedEmployee": {
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
+        }
+      },
+      "required": [
+        "userId",
+        "title",
+        "description"
+      ]
+    },
+    "TicketUpdateInput": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
+        },
+        "title": {
+          "type": "string",
+          "example": "Lost Database Access"
+        },
+        "description": {
+          "type": "string",
+          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
+        },
+        "priorityLevel": {
+          "type": "string",
+          "example": "High"
+        },
+        "status": {
+          "type": "string",
+          "example": "Open"
+        },
+        "assignedEmployee": {
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
+        }
+      },
+      "required": [
+        "userId",
+        "title",
+        "description"
+      ]
+    },
+    "TicketOutput": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "6565e2555f22d1e51377e14b"
+        },
+        "userId": {
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
+        },
+        "title": {
+          "type": "string",
+          "example": "Lost Database Access"
+        },
+        "description": {
+          "type": "string",
+          "example": "The IP address of the new servers don't have access the database, which is essential for testing the new API."
+        },
+        "priorityLevel": {
+          "type": "string",
+          "example": "High"
+        },
+        "status": {
+          "type": "string",
+          "example": "New"
+        },
+        "assignedEmployee": {
+          "type": "string",
+          "example": "6568d4ca16eaa1dfd891beca"
+        },
+        "dateCreated": {
+          "type": "string",
+          "example": "2023-11-18T00:00:00.000+00:00"
+        }
+      }
+    },
+    "TicketOutputArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TicketOutput"
+      }
+    },
+    "TicketIdNotFound": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No ticket found with ID 6565e2555f22d1e51377e14b"
+        }
+      }
+    },
+    "ResolutionId": {
+      "type": "string",
+      "example": "656a290cc420deb53c7d03e6"
+    },
+    "ResolutionInput": {
+      "type": "object",
+      "properties": {
+        "ticketId": {
+          "type": "string",
+          "example": "6565e2555f22d1e51377e14b"
+        },
+        "description": {
+          "type": "string",
+          "example": "Updated the Batmobile OS to v19.39"
+        },
+        "resolvedByEmployee": {
+          "type": "string",
+          "example": "6554f4f588e34040ea6a2085"
+        }
+      },
+      "required": [
+        "ticketId",
+        "description",
+        "resolvedByEmployee"
+      ]
+    },
+    "ResolutionOutput": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "656a290cc420deb53c7d03e6"
+        },
+        "ticketId": {
+          "type": "string",
+          "example": "6565e2555f22d1e51377e14b"
+        },
+        "resolution": {
+          "type": "string",
+          "example": "Updated the Batmobile OS to v19.39"
+        },
+        "resolvedByEmployee": {
+          "type": "string",
+          "example": "6554f4f588e34040ea6a2085"
+        },
+        "dateCreated": {
+          "type": "string",
+          "example": "2023-11-18T00:00:00.000+00:00"
+        }
+      }
+    },
+    "ResolutionOutputArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ResolutionOutput"
+      }
+    },
+    "ResolutionIdNotFound": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No resolution found with ID 656a290cc420deb53c7d03e6"
         }
       }
     }

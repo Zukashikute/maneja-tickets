@@ -21,6 +21,39 @@ const getAllTickets = async (req, res) => {
     }
 };
 
+const getTicketByID = async (req, res) => {
+    //  #swagger.tags = ['Tickets']
+    //  #swagger.summary = 'Get a ticket by ID.'
+    //  #swagger.description = 'Retrieve a specified ticket from the database.'
+    /*  #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'The ticket object to be inserted.',
+            required: true,
+            schema: { $ref: '#/definitions/TicketId' }
+    } */
+    //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
+    try {
+        const _id = req.params.id;
+        if (!_id) {
+            res.status(404).send({ message: 'No ticket found with ID ' + _id });
+            return;
+            /*  #swagger.responses[404] = {
+                description: 'Ticket ID Not Found',
+                schema: { $ref: '#/definitions/TicketIdNotFound' }
+            } */
+        }
+        const result = await Ticket.find({ _id: _id }).then((data) => {
+            res.status(200).send(data);
+        });
+        /*  #swagger.responses[200] = {
+                description: 'Retrieved',
+                schema: { $ref: '#/definitions/TicketOutput' }
+        } */
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
 const createNewTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Create a new ticket.'
@@ -68,7 +101,7 @@ const updateTicket = async (req, res) => {
             in: 'body',
             description: 'Any number of fields of the ticket object to be updated, along with their new values.',
             required: true,
-            schema: { $ref: '#/definitions/TicketInput' }
+            schema: { $ref: '#/definitions/TicketUpdateInput' }
     } */
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]'
     try {
@@ -88,8 +121,8 @@ const updateTicket = async (req, res) => {
                 .status(404)
                 .send({ message: 'No ticket found with ID ' + _id });
             /*  #swagger.responses[404] = {
-                description: 'Ticket ID Not Found',
-                schema: { $ref: '#/definitions/TicketIdNotFound' }
+                    description: 'Ticket ID Not Found',
+                    schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
         }
         return res.status(200).json(result);
@@ -101,46 +134,13 @@ const updateTicket = async (req, res) => {
     }
 };
 
-const getTicketByID = async (req, res) => {
-    //  #swagger.tags = ['Tickets']
-    //  #swagger.summary = 'Get a ticket by ID.'
-    //  #swagger.description = 'Retrieve a specified ticket from the database.'
-    /*  #swagger.parameters['id'] = {
-            in: 'path',
-            description: 'The ticket object to be inserted.',
-            required: true,
-            schema: { $ref: '#/definitions/TicketId' }
-    } */
-    //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
-    try {
-        const _id = req.params.id;
-        if (!_id) {
-            res.status(404).send({ message: 'No ticket found with ID ' + _id });
-            return;
-            /*  #swagger.responses[404] = {
-                description: 'Ticket ID Not Found',
-                schema: { $ref: '#/definitions/TicketIdNotFound' }
-            } */
-        }
-        const result = await Ticket.find({ _id: _id }).then((data) => {
-            res.status(200).send(data);
-        });
-        /*  #swagger.responses[200] = {
-                description: 'Retrieved',
-                schema: { $ref: '#/definitions/TicketOutput' }
-        } */
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
-
 const deleteTicket = async (req, res) => {
     //  #swagger.tags = ['Tickets']
     //  #swagger.summary = 'Delete a ticket by ID.'
     //  #swagger.description = 'Deletes a specified ticket from the database.'
     /*  #swagger.parameters['id'] = {
             in: 'path',
-            description: 'All fields of a new ticket object to be inserted.',
+            description: 'The ID of the ticket to be deleted.',
             required: true,
             schema: { $ref: '#/definitions/TicketId' }
     } */
