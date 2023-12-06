@@ -104,7 +104,7 @@ const updateTicket = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]'
     try {
-        // Query the database
+        // Update the database
         const _id = req.params.id;
         const updates = {
             title: req.body.title,
