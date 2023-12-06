@@ -15,6 +15,7 @@ const getAllTickets = async (req, res) => {
             schema: { $ref: '#/definitions/TicketOutputArray' }
         } */
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 };
@@ -51,8 +52,9 @@ const getTicketByID = async (req, res) => {
                 description: 'Retrieved',
                 schema: { $ref: '#/definitions/TicketOutput' }
         } */
-    } catch (error) {
-        res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
@@ -82,6 +84,7 @@ const createNewTicket = async (req, res) => {
                 schema: { $ref: '#/definitions/TicketOutput' }
         } */
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 };
@@ -132,8 +135,9 @@ const updateTicket = async (req, res) => {
         /*  #swagger.responses[204] = {
                 description: 'Updated'
         } */
-    } catch (error) {
-        return res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
     }
 };
 
@@ -169,8 +173,9 @@ const deleteTicket = async (req, res) => {
             description: 'Deleted'
             schema: { message: 'Ticket deleted!' }
         } */
-    } catch (error) {
-        res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 

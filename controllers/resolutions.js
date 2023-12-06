@@ -15,6 +15,7 @@ const getAllResolutions = async (req, res) => {
                 schema: { $ref: '#/definitions/ResolutionOutputArray' }
         } */
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 };
@@ -51,9 +52,9 @@ const getResolutionByID = async (req, res) => {
                 description: 'Retrieved',
                 schema: { $ref: '#/definitions/ResolutionOutput' }
         } */
-    } catch (error) {
-        console.log(error);
-        res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
@@ -81,6 +82,7 @@ const createNewResolution = async (req, res) => {
                 schema: { $ref: '#/definitions/ResolutionOutput' }
         } */
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 };
@@ -130,8 +132,9 @@ const updateResolution = async (req, res) => {
         /*  #swagger.responses[204] = {
                 description: 'Updated'
         } */
-    } catch (error) {
-        return res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
     }
 };
 
@@ -169,8 +172,9 @@ const deleteResolution = async (req, res) => {
             description: 'Deleted'
             schema: { message: 'Resolution deleted!' }
         } */
-    } catch (error) {
-        res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
