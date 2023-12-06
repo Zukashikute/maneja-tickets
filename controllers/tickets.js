@@ -8,14 +8,12 @@ const getAllTickets = async (req, res) => {
     // #swagger.description = 'Get all tickets data from the database'.
     // #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
-        Ticket.find({}).then((lists) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists);
-            /* #swagger.responses[200] = {
-                description: 'Retrieved',
-                schema: { $ref: '#/definitions/TicketOutputArray' }
+        const result = await Ticket.find();
+        res.status(200).json(result);
+        /* #swagger.responses[200] = {
+            description: 'Retrieved',
+            schema: { $ref: '#/definitions/TicketOutputArray' }
         } */
-        });
     } catch (err) {
         res.status(500).json(err);
     }
@@ -33,18 +31,22 @@ const getTicketByID = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
+        // Query the database
         const _id = req.params.id;
-        if (!_id) {
-            res.status(404).send({ message: 'No ticket found with ID ' + _id });
+        const result = await Ticket.findById(_id);
+
+        // Respond with 404 if the given ID isn't in the database
+        if (!result) {
+            res.status(404).json({ message: 'No ticket found with ID ' + _id });
             return;
             /*  #swagger.responses[404] = {
                 description: 'Ticket ID Not Found',
                 schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
         }
-        const result = await Ticket.find({ _id: _id }).then((data) => {
-            res.status(200).send(data);
-        });
+
+        // Send the returned data
+        res.status(200).json(result);
         /*  #swagger.responses[200] = {
                 description: 'Retrieved',
                 schema: { $ref: '#/definitions/TicketOutput' }
@@ -73,11 +75,8 @@ const createNewTicket = async (req, res) => {
             priorityLevel: req.body.priorityLevel,
             assignedEmployee: req.body.assignedEmployee,
         });
-
-        await newTicket.save().then((data) => {
-            console.log(data);
-            res.status(201).send(data);
-        });
+        const result = await newTicket.save();
+        res.status(201).json(result);
         /*  #swagger.responses[201] = {
                 description: 'Created',
                 schema: { $ref: '#/definitions/TicketOutput' }
@@ -105,26 +104,30 @@ const updateTicket = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]'
     try {
+        // Query the database
         const _id = req.params.id;
-        const ticket = {
+        const updates = {
             title: req.body.title,
             description: req.body.description,
             priorityLevel: req.body.priorityLevel,
             status: req.body.status,
             assignedEmployee: req.body.assignedEmployee,
         };
-        const result = await Ticket.findByIdAndUpdate(_id, ticket, {
+        const result = await Ticket.findByIdAndUpdate(_id, updates, {
             new: true,
         });
+
+        // Respond with 404 if the given ID isn't in the database
         if (!result) {
-            return res
-                .status(404)
-                .send({ message: 'No ticket found with ID ' + _id });
+            res.status(404).json({ message: 'No ticket found with ID ' + _id });
+            return;
             /*  #swagger.responses[404] = {
                     description: 'Ticket ID Not Found',
                     schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
         }
+
+        // Send the updated object
         return res.status(200).json(result);
         /*  #swagger.responses[204] = {
                 description: 'Updated'
@@ -146,28 +149,26 @@ const deleteTicket = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
     try {
+        // Delete the object from the database
         const _id = req.params.id;
-        if (!_id) {
-            res.status(404).send({ message: 'No ticket found with ID ' + _id });
+        const result = await Ticket.findByIdAndDelete(_id);
+
+        // Respond with 404 if the given ID isn't in the database
+        if (!result) {
+            res.status(404).json({ message: 'No ticket found with ID ' + _id });
             return;
             /*  #swagger.responses[404] = {
                 description: 'Ticket ID Not Found',
                 schema: { $ref: '#/definitions/TicketIdNotFound' }
             } */
         }
-        const result = await Ticket.deleteOne({ _id: _id }).then((data) => {
-            if (data.deletedCount > 0) {
-                res.status(200).send({ message: 'Ticket deleted!'});
-                /*  #swagger.responses[200] = {
-                    description: 'Deleted'
-                } */
-            } else {
-                res.status(500).json(
-                    data.error ||
-                        'Some error occurred while deleting the ticket.'
-                );
-            }
-        });
+
+        // Give a success message
+        res.status(200).json({ message: 'Ticket deleted!' });
+        /*  #swagger.responses[200] = {
+            description: 'Deleted'
+            schema: { message: 'Ticket deleted!' }
+        } */
     } catch (error) {
         res.status(500).json(error);
     }
