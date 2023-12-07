@@ -14,7 +14,7 @@ router.post(
     '/',
     validate.authCheck,
     resolutionValidate.createResolutionRules(),
-    resolutionValidate.checkResolutionsCreateData,
+    resolutionValidate.checkResolutionCreateData,
     resolutionsController.createNewResolution
 );
 
