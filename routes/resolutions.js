@@ -13,18 +13,16 @@ router.get('/:id', validate.authCheck, resolutionsController.getResolutionByID);
 router.post(
     '/',
     validate.authCheck,
-    // resolutionValidate.resolutionRules(),
-    // resolutionValidate.checkResolutionsData,
-    resolutionsController.createNewResolution
+    resolutionValidate.createResolutionRules(),
+    resolutionsController.checkResolutionCreateData,
 );
 
 // Update Resolution using existing ID
 router.put(
     '/:id',
     validate.authCheck,
-    // resolutionValidate.resolutionRules(),
-    // resolutionValidate.checkResolutionsData,
-    resolutionsController.updateResolution
+    resolutionValidate.updateResolutionRules(),
+    resolutionsController.checkResolutionUpdateData,
 );
 
 // Delete a Resolution by ID
