@@ -132,7 +132,7 @@ const updateTicket = async (req, res) => {
 
         // Send the updated object
         return res.status(200).json(result);
-        /*  #swagger.responses[204] = {
+        /*  #swagger.responses[200] = {
                 description: 'Updated'
         } */
     } catch (err) {
@@ -170,8 +170,8 @@ const deleteTicket = async (req, res) => {
         // Give a success message
         res.status(200).json({ message: 'Ticket deleted!' });
         /*  #swagger.responses[200] = {
-            description: 'Deleted'
-            schema: { message: 'Ticket deleted!' }
+                description: 'Deleted'
+                schema: { message: 'Ticket deleted!' }
         } */
     } catch (err) {
         console.log(err);

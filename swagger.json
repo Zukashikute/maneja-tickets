@@ -289,9 +289,6 @@
         ],
         "summary": "Get all tickets",
         "description": "Get all tickets data from the database",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Retrieved",
@@ -345,9 +342,6 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "204": {
             "description": "Updated"
           },
           "404": {
@@ -437,7 +431,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Deleted"
+            "description": "OK"
           },
           "404": {
             "description": "Ticket ID Not Found",
@@ -468,9 +462,6 @@
         ],
         "summary": "Get all ticket resolutions.",
         "description": "Get all resolution tickets data from the database",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Retrieved",
@@ -562,19 +553,10 @@
               "$ref": "#/definitions/ResolutionOutput"
             }
           },
-          "400": {
-            "description": "Invalid Resolution ID",
+          "404": {
+            "description": "Resolution ID Not Found",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid resolution ID Supplied"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/ResolutionIdNotFound"
             }
           },
           "500": {
@@ -621,9 +603,6 @@
         ],
         "responses": {
           "200": {
-            "description": "Deleted"
-          },
-          "204": {
             "description": "Updated"
           },
           "404": {
@@ -673,10 +652,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Deleted"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "OK"
           },
           "404": {
             "description": "Resolution ID Not Found",

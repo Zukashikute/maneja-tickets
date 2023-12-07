@@ -129,7 +129,7 @@ const updateResolution = async (req, res) => {
 
         // Send the updated object
         return res.status(200).json(result);
-        /*  #swagger.responses[204] = {
+        /*  #swagger.responses[200] = {
                 description: 'Updated'
         } */
     } catch (err) {
