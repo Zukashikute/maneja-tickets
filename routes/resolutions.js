@@ -14,7 +14,8 @@ router.post(
     '/',
     validate.authCheck,
     resolutionValidate.createResolutionRules(),
-    resolutionsController.checkResolutionCreateData,
+    resolutionValidate.checkResolutionsCreateData,
+    resolutionsController.createNewResolution
 );
 
 // Update Resolution using existing ID
@@ -22,7 +23,8 @@ router.put(
     '/:id',
     validate.authCheck,
     resolutionValidate.updateResolutionRules(),
-    resolutionsController.checkResolutionUpdateData,
+    resolutionValidate.checkResolutionUpdateData,
+    resolutionsController.updateResolution
 );
 
 // Delete a Resolution by ID
