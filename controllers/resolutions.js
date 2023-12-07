@@ -8,15 +8,14 @@ const getAllResolutions = async (req, res) => {
     // #swagger.description = 'Get all resolution tickets data from the database'.
     // #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
-        Resolution.find({}).then((lists) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists);
-            /* #swagger.responses[200] = {
-                    description: 'Retrieved',
-                    schema: { $ref: '#/definitions/ResolutionOutputArray' }
-            } */
-        });
+        const result = await Resolution.find();
+        res.status(200).json(result);
+        /* #swagger.responses[200] = {
+                description: 'Retrieved',
+                schema: { $ref: '#/definitions/ResolutionOutputArray' }
+        } */
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 };
@@ -34,26 +33,28 @@ const getResolutionByID = async (req, res) => {
     //  #swagger.security = [{ "BasicAuth": ['read'], "GoogleOAuth": ['read'] }]
     try {
         const _id = req.params.id;
-        if (!_id) {
-            res.status(400).send({
-                message: 'Invalid resolution ticket ID Supplied',
+        const result = await Resolution.findById(_id);
+
+        if (!result) {
+            res.status(404).json({
+                message: 'No resolution found with ID ' + _id,
             });
             return;
-            /*  #swagger.responses[400] = {
-                    description: 'Invalid Resolution ID',
-                    schema: { message: 'Invalid resolution ID Supplied' }
+            /*  #swagger.responses[404] = {
+                    description: 'Resolution ID Not Found',
+                    schema: { $ref: '#/definitions/ResolutionIdNotFound' }
             } */
         }
-        const result = await Resolution.find({ _id: _id }).then((data) => {
-            res.status(200).send(data);
-        });
+
+        // Send the returned data
+        res.status(200).json(result);
         /*  #swagger.responses[200] = {
                 description: 'Retrieved',
                 schema: { $ref: '#/definitions/ResolutionOutput' }
         } */
-    } catch (error) {
-        console.log(error);
-        res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
@@ -74,16 +75,14 @@ const createNewResolution = async (req, res) => {
             description: req.body.description,
             resolvedByEmployee: req.body.resolvedByEmployee,
         });
-
-        await newResolution.save().then((data) => {
-            console.log(data);
-            res.status(201).send(data);
-        });
+        const result = await newResolution.save();
+        res.status(201).json(result);
         /*  #swagger.responses[201] = {
                 description: 'Created',
                 schema: { $ref: '#/definitions/ResolutionOutput' }
         } */
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 };
@@ -106,6 +105,7 @@ const updateResolution = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]'
     try {
+        // Update the database
         const _id = req.params.id;
         const resolution = {
             description: req.body.description,
@@ -114,21 +114,27 @@ const updateResolution = async (req, res) => {
         const result = await Resolution.findByIdAndUpdate(_id, resolution, {
             new: true,
         });
+
+        // Respond with 404 if the given ID isn't in the database
         if (!result) {
-            return res
-                .status(404)
-                .send({ message: 'No Resolution found with id ' + _id });
+            res.status(404).json({
+                message: 'No resolution found with ID ' + _id,
+            });
+            return;
             /*  #swagger.responses[404] = {
                     description: 'Resolution ID Not Found',
                     schema: { $ref: '#/definitions/ResolutionIdNotFound' }
             } */
         }
+
+        // Send the updated object
         return res.status(200).json(result);
         /*  #swagger.responses[204] = {
                 description: 'Updated'
         } */
-    } catch (error) {
-        return res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
     }
 };
 
@@ -144,30 +150,31 @@ const deleteResolution = async (req, res) => {
     } */
     //  #swagger.security = [{ "BasicAuth": ['write'], "GoogleOAuth": ['write'] }]
     try {
+        // Delete the object from the database
         const _id = req.params.id;
-        if (!_id) {
-            res.status(400).send({ message: 'Invalid ticket ID Supplied' });
+        const result = await Resolution.findByIdAndDelete(_id);
+
+        // Respond with 404 if the given ID isn't in the database
+        if (!result) {
+            res.status(404).json({
+                message: 'No resolution found with ID ' + _id,
+            });
             return;
             /*  #swagger.responses[404] = {
                 description: 'Resolution ID Not Found',
                 schema: { message: 'Invalid ticket ID Supplied' }
             } */
         }
-        const result = await Resolution.deleteOne({ _id: _id }).then((data) => {
-            if (data.deletedCount > 0) {
-                res.status(200).send({message: 'Resolution deleted!'});
-                /*  #swagger.responses[200] = {
-                    description: 'Deleted'
-                } */
-            } else {
-                res.status(500).json(
-                    data.error ||
-                        'Some error occurred while deleting the resolution.'
-                );
-            }
-        });
-    } catch (error) {
-        res.status(500).json(error);
+
+        // Give a success message
+        res.status(200).json({ message: 'Resolution deleted!' });
+        /*  #swagger.responses[200] = {
+            description: 'Deleted'
+            schema: { message: 'Resolution deleted!' }
+        } */
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
 
