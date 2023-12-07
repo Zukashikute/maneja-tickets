@@ -18,8 +18,8 @@ const createAccount = async (req, res) => {
     try {
         // Regular password and cost (salt is generated automatically)
         hashedPassword = await bcrypt.hashSync(req.body.password, 10);
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
+        console.log(err);
     }
     const users = new Users({
         firstName: req.body.firstName,
@@ -40,6 +40,7 @@ const createAccount = async (req, res) => {
             } */
         })
         .catch((err) => {
+            console.log(err);
             res.status(500).send({
                 message:
                     err.message || 'Some error occurred while creating user.',
@@ -83,9 +84,10 @@ const userLogin = async (req, res) => {
         } else {
             res.send('Email or password is not valid');
         }
-    } catch (error) {
+    } catch (err) {
+        console.log(err);
         res.status(401);
-        throw new Error(error);
+        throw new Error(err);
         /*  #swagger.responses[401] = {
                 description: 'Server Error',
         } */
@@ -142,8 +144,9 @@ const userUpdate = async (req, res) => {
         /*  #swagger.responses[200] = {
                 description: 'Updated'
         } */
-    } catch (error) {
-        return res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
     }
 };
 
@@ -171,7 +174,7 @@ const userDelete = async (req, res) => {
         }
         const result = await Users.deleteOne({ _id: _id }).then((data) => {
             if (data.deletedCount > 0) {
-                res.status(200).send({ message: 'User account deleted.'});
+                res.status(200).send({ message: 'User account deleted.' });
                 /*  #swagger.responses[200] = {
                     description: 'Deleted'
                 } */
@@ -182,17 +185,16 @@ const userDelete = async (req, res) => {
                 );
             }
         });
-    } catch (error) {
-        res.status(500).json(error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 };
-
-
 
 module.exports = {
     createAccount,
     userLogin,
     userLogout,
     userUpdate,
-    userDelete
+    userDelete,
 };

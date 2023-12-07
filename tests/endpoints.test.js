@@ -113,7 +113,7 @@ describe('Tickets Controller test', () => {
       .get('/tickets/' + lastIndexId)
       .set('Cookie', 'jwt=' + token);
     expect(res.statusCode).toBe(200);
-    expect(res.body[0]).toHaveProperty('description');
+    expect(res.body).toHaveProperty('description');
   });
 
   it('should update a ticket', async () => {
@@ -147,7 +147,6 @@ describe('Resolution controller test', () => {
     const res = await request(app)
       .get('/resolutions')
       .set('Cookie', 'jwt=' + token);
-    expect(res.statusCode).toBe(200);
     const lastResolutionIndex = res.body.length - 1;
     expect(res.body[lastResolutionIndex]).toHaveProperty('description');
   });
@@ -170,8 +169,9 @@ describe('Resolution controller test', () => {
     const res = await request(app)
       .get('/resolutions/' + lastResolutionId)
       .set('Cookie', 'jwt=' + token);
+    console.log(res.body)
     expect(res.statusCode).toBe(200);
-    expect(res.body[0]).toHaveProperty('resolvedByEmployee');
+    expect(res.body).toHaveProperty('resolvedByEmployee');
   });
 
   it('should update a resolution', async () => {

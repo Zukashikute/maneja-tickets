@@ -13,8 +13,8 @@ router.get('/:id', validate.authCheck, resolutionsController.getResolutionByID);
 router.post(
     '/',
     validate.authCheck,
-    // resolutionValidate.resolutionRules(),
-    // resolutionValidate.checkResolutionsData,
+    resolutionValidate.createResolutionRules(),
+    resolutionValidate.checkResolutionCreateData,
     resolutionsController.createNewResolution
 );
 
@@ -22,8 +22,8 @@ router.post(
 router.put(
     '/:id',
     validate.authCheck,
-    // resolutionValidate.resolutionRules(),
-    // resolutionValidate.checkResolutionsData,
+    resolutionValidate.updateResolutionRules(),
+    resolutionValidate.checkResolutionUpdateData,
     resolutionsController.updateResolution
 );
 
