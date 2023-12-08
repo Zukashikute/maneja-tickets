@@ -48,13 +48,26 @@ Content-Type: application/json
 ### DELETE USER
 DELETE {{host}}/auth/account/6568d4ca16eaa1dfd891beca HTTP/1.1
 
-
 ### LOG OUT
 GET {{host}}/auth/logout
 
-### GOOGLE LOGIN
-POST {{host}}/auth/google
+#################
+# GOOGLE USERS
+#################
 
+### GOOGLE LOGIN
+POST {{host}}/google
+
+### UPDATE GOOGLE USER
+PUT {{host}}/google/update/65731e77d84fcef1ffba8208 HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Bruce Wayne"
+}
+
+### DELETE GOOGLE USER
+DELETE {{host}}/google/delete/65731e77d84fcef1ffba8208 HTTP/1.1
 
 #################
 # TICKETS

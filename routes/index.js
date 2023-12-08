@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/', require('./swagger'));
+router.use('/google', require('./google'));
 router.use('/auth', require('./users'));
 router.use('/tickets', require('./tickets'));
 router.use('/resolutions', require('./resolutions'));
