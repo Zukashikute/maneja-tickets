@@ -39,6 +39,130 @@
     }
   },
   "paths": {
+    "/google/": {
+      "get": {
+        "tags": [
+          "Google Users"
+        ],
+        "summary": "Login with a Google Account.",
+        "description": "Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/google/redirect": {
+      "get": {
+        "tags": [
+          "Google Users"
+        ],
+        "summary": "Callback route for Google.",
+        "description": "After logging in with a Google account, this is the endpoint Google redirects to.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/google/update/{id}": {
+      "put": {
+        "tags": [
+          "Google Users"
+        ],
+        "summary": "Update a username.",
+        "description": "Updates an existing username in the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The username of the user to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/GoogleUserId"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "An object with the username field and the new value.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GoogleUserUpdateInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "User ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/UserIdNotFound"
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      }
+    },
+    "/google/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Google Users"
+        ],
+        "summary": "Delete a user by username.",
+        "description": "Deletes a specified user from the database in the Google Collection.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The username of the user to be deleted.",
+            "schema": {
+              "$ref": "#/definitions/GoogleUserId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "User ID Not Found",
+            "schema": {
+              "$ref": "#/definitions/UserIdNotFound"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": [
+              "write"
+            ],
+            "GoogleOAuth": [
+              "write"
+            ]
+          }
+        ]
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": [
@@ -208,34 +332,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/auth/google": {
-      "get": {
-        "tags": [
-          "Google Users"
-        ],
-        "summary": "Login with a Google Account.",
-        "description": "Login with an existing user account, granting access to restricted API routes and endpoints for 1 hour or until logged out.",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/google/redirect": {
-      "get": {
-        "tags": [
-          "Google Users"
-        ],
-        "summary": "Callback route for Google.",
-        "description": "After logging in with a Google account, this is the endpoint Google redirects to.",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
@@ -912,6 +1008,19 @@
         "message": {
           "type": "string",
           "example": "No user found with ID 6568d4ca16eaa1dfd891beca"
+        }
+      }
+    },
+    "GoogleUserId": {
+      "type": "string",
+      "example": "6553fd4495e95588a3921cfd"
+    },
+    "GoogleUserUpdateInput": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "Bruce Wayne"
         }
       }
     },

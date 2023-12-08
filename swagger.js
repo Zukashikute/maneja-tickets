@@ -76,6 +76,12 @@ const doc = {
             message: 'No user found with ID 6568d4ca16eaa1dfd891beca',
         },
 
+        // Google User
+        GoogleUserId: '6553fd4495e95588a3921cfd',
+        GoogleUserUpdateInput: {
+            username: 'Bruce Wayne',
+        },
+
         // Tickets
         TicketId: '6565e2555f22d1e51377e14b',
         TicketInput: {
