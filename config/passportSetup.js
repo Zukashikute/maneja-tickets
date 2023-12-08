@@ -17,7 +17,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy ({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://maneja-tickets.onrender.com/auth/google/redirect'    
+    callbackURL: 'https://maneja-tickets.onrender.com/google/redirect'    
 }, (req, accessToken, refreshToken, profile, done) => {
    // check if user already exists in our db
    GoogleUser.findOne({googleId: profile.id}).then((currentUser) => {
