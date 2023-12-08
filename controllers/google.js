@@ -36,7 +36,6 @@ const GoogleUserUpdate = async (req, res) => {
                     schema: { $ref: '#/definitions/UserIdNotFound' }
             } */
         }
-        console.log(result)
         return res.status(200).json(result);
     } catch (err) {
         console.log(err);
